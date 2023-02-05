@@ -4,16 +4,36 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var mysql = require('mysql');
 
+// 페이지 라우터 등록
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 // express 애플리케이션 생성
 var app = express();
 
-// view engine setup
+// 뷰 엔진 설정
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+
+// 커넥션 객체 생성
+var connection = mysql.createConnection({
+  host: 'localhost',
+  port: 3306,
+  user: 'root',
+  password: '1234',
+  database: 'pwa_crud'
+});
+
+// DB 연결
+connection.connect(function (err) {
+  if (err) {
+    console.error('mysql connection error');
+    console.error(err);
+    throw err;
+  }
+});
 
 // 미들웨어 함수나 함수를 사용 가능한 상태로 준비한다 (마운트)
 app.use(logger('dev'));
