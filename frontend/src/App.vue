@@ -5,6 +5,7 @@
       <router-link to="/login">Login</router-link>
       <router-link to="/signUp">SignUp</router-link>
     </div>
+    <b-button varient="primary">Button</b-button>
     <router-view/>
   </div>
 </template>

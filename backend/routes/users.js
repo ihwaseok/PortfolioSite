@@ -24,7 +24,6 @@ connection.connect(function (err) {
 // URL 등록
 router.get('/', function(req, res, next) {
   connection.query('SELECT * FROM users', function (err, rows) {
-    console.log('유저 리스트 가져오기 실행');
     if (err) throw err;
     res.send(rows);
   });
