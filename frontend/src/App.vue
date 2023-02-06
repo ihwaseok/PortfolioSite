@@ -1,31 +1,25 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link>
-      <router-link to="/login">Login</router-link>
-      <router-link to="/signUp">SignUp</router-link>
+    <Header/>
+    <div class="wrap">
+      <SideMenu/>
+      
     </div>
-    <b-button varient="primary">Button</b-button>
-    <router-view/>
   </div>
 </template>
 
 <script>
-import router from './router';
+import Header from './components/Header';
+import SideMenu from './components/SideMenu';
 
 export default {
     name: "App",
-    components: { router }
+    components: {
+      Header,
+      SideMenu
+    }
 }
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style scoped>
 </style>

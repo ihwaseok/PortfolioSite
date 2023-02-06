@@ -9,6 +9,7 @@ var mysql = require('mysql');
 // 페이지 라우터 등록
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var joplinRouter = require('./routes/joplin');
 
 // express 애플리케이션 생성
 var app = express();
@@ -45,6 +46,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // frontend의 REST API 연결
 app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
+app.use('/joplin', joplinRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
