@@ -1,22 +1,21 @@
 <template>
   <div id="app">
     <Header/>
-    <div class="wrap">
-      <SideMenu/>
-      
+    <div>
+      <JoplinPage/>
     </div>
   </div>
 </template>
 
 <script>
 import Header from './components/Header';
-import SideMenu from './components/SideMenu';
+import JoplinPage from './components/JoplinPage';
 
 export default {
     name: "App",
     components: {
       Header,
-      SideMenu
+      JoplinPage
     }
 }
 </script>
