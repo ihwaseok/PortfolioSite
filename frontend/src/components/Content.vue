@@ -1,0 +1,30 @@
+<template>
+    <div>
+        <div>Content</div>
+        <div v-html="compiledHtml"></div>
+    </div>
+</template>
+
+<script setup lang="ts">
+import axios from 'axios';
+import { ref } from 'vue';
+import type { Ref } from 'vue';
+
+let compiledHtml: Ref<string> = ref('');
+
+const props = defineProps<{
+    page: string;
+}>()
+
+axios.get('/joplin/page/r', {params: {page: props.page}})
+    .then((res) => {
+        compiledHtml.value = res.data;
+    });
+
+</script>
+
+<style scoped>
+div {
+    flex: 3;
+}
+</style>

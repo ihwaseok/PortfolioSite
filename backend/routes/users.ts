@@ -1,10 +1,10 @@
-var express = require('express');
-var router = express.Router();
-const bcrypt = require('bcryptjs');
-var mysql = require('mysql');
+import express, { Request, Response, NextFunction} from 'express';
+import mysql, { Connection, MysqlError } from 'mysql';
+import bcrypt from 'bcryptjs';
+const router = express.Router();
 
 // 커넥션 생성
-var connection = mysql.createConnection({
+const connection:Connection = mysql.createConnection({
   host: 'localhost',
   port: 3306,
   user: 'root',
@@ -13,7 +13,7 @@ var connection = mysql.createConnection({
 });
 
 // DB 연결
-connection.connect(function (err) {
+connection.connect(function (err:MysqlError) {
   if (err) {
     console.error('mysql connection error');
     console.error(err);
@@ -22,27 +22,27 @@ connection.connect(function (err) {
 });
 
 // URL 등록
-router.get('/', function(req, res, next) {
+router.get('/', function(req:Request, res:Response, next:NextFunction) {
   connection.query('SELECT * FROM users', function (err, rows) {
     if (err) throw err;
     res.send(rows);
   });
 });
 
-router.post('/signUp', function (req, res) {
+router.post('/signUp', function (req:Request, res:Response) {
   const user = {
     'userid'  : req.body.user.userid,
     'name'    : req.body.user.name,
     'password': req.body.user.password
   };
 
-  connection.query('SELECT userid FROM users WHERE userid = "' + user.userid + '"', function (err, row) {
+  connection.query('SELECT userid FROM users WHERE userid = "' + user.userid + '"', function (err:Error, row:object[]) {
     // 동일한 아이디가 없을 경우 등록
     if (row[0] == undefined) {
       const salt = bcrypt.genSaltSync();
       const encryptedPassword = bcrypt.hashSync(user.password, salt);
 
-      connection.query('INSERT INTO users (userid, name, password) VALUES ("' + user.userid + '","' + user.name + '","' + encryptedPassword + '")', user, function (err, row2) {
+      connection.query('INSERT INTO users (userid, name, password) VALUES ("' + user.userid + '","' + user.name + '","' + encryptedPassword + '")', user, function (err:Error | null, row2:object[]) {
         if (err) throw err;
       });
 
@@ -60,13 +60,13 @@ router.post('/signUp', function (req, res) {
   });
 });
 
-router.post('/login', function (req, res) {
+router.post('/login', function (req:Request, res:Response) {
   const user = {
     'userid'  : req.body.user.userid,
     'password': req.body.user.password
   }
 
-  connection.query('SELECT userid, password FROM users WHERE userid = "' + user.userid + '"', function (err, row) {
+  connection.query('SELECT userid, password FROM users WHERE userid = "' + user.userid + '"', function (err:Error, row:typeof user[]) {
     if (err) {
       res.json({
         success: false,
@@ -92,4 +92,4 @@ router.post('/login', function (req, res) {
   })
 });
 
-module.exports = router;
+export default router;

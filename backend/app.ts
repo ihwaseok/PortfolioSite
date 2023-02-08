@@ -1,6 +1,6 @@
 // 외부 모듈 가져오기
 import createError, { HttpError } from 'http-errors';
-import express, { Request, Response, NextFunction, ErrorRequestHandler } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
@@ -8,15 +8,15 @@ import mysql from 'mysql';
 
 // 페이지 라우터 등록
 import indexRouter from './routes/index';
-//import usersRouter from './routes/users';
-//import joplinRouter from './routes/joplin';
+import usersRouter from './routes/users';
+import joplinRouter from './routes/joplin';
 
 // express 애플리케이션 생성
 const app = express();
 
 // 뷰 엔진 설정
-app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+app.set('views', path.join(__dirname, 'views'));
 
 // 커넥션 객체 생성
 const connection = mysql.createConnection({
@@ -45,8 +45,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // frontend의 REST API 연결
 app.use('/', indexRouter);
-//app.use('/api/users', usersRouter);
-//app.use('/joplin', joplinRouter);
+app.use('/api/users', usersRouter);
+app.use('/joplin', joplinRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req:Request, res:Response, next:NextFunction) {
