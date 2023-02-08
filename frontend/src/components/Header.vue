@@ -1,14 +1,19 @@
 <template>
-<div> Header </div>
+<header>
+    <h1>Header</h1>
+    <nav>
+        <span>Menu1</span>
+    </nav>
+</header>
 </template>
 
 <script setup lang="ts">
 </script>
 
 <style scoped>
-div {
+header {
     position: sticky;
-    height: 50px;
-    border-bottom: 1px solid #ebebeb;
+    top: 0px;
+    background-color: darkseagreen;
 }
 </style>

@@ -1,11 +1,17 @@
 <template>
-    <div class="wrap">
+<body>
+    <nav class="wrap">
         <div class="sideMenu">
             <li><button v-on:click="test1">test1</button></li>
             <li><button v-on:click="test2">test2</button></li>
         </div>
-        <Content v-bind:page="page"/>
-    </div>
+        <div class="subMenu">
+            <li><button v-on:click="test1">test3</button></li>
+            <li><button v-on:click="test2">test4</button></li>
+        </div>
+        <Content class="content" v-bind:page="page"/>
+    </nav>
+</body>
 </template>
 
 <script setup lang="ts">
@@ -25,10 +31,23 @@ const test2 = function():void {
 
 <style scoped>
 .wrap {
-  display: flex;
+    display: flex;
 }
 
 .sideMenu {
-    flex: 1;
+    position: fixed;
+    overflow: auto;
+    background-color: aqua;
+}
+
+.subMenu {
+    position: fixed;
+    overflow: auto;
+    margin-left: 10%;
+    background-color: aquamarine;
+}
+
+.content {
+    margin-left: 25%;
 }
 </style>
