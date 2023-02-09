@@ -15,8 +15,10 @@
 </template>
 
 <script setup lang="ts">
+import axios, { type AxiosResponse } from 'axios';
 import Content from './Content.vue';
 
+let menuList: object[] = [];
 let page = 'test.html';
 
 const test1 = function():void {
@@ -26,6 +28,12 @@ const test1 = function():void {
 const test2 = function():void {
     console.log('test2');
 }
+
+axios.get('/joplin/menu/r', {params: {id: 'all'}})
+    .then((res: AxiosResponse) => {
+        menuList = res.data;
+        console.log(menuList);
+    });
 
 </script>
 
