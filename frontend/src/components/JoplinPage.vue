@@ -1,60 +1,34 @@
 <template>
-<body>
-    <nav class="wrap">
-        <div class="sideMenu">
-            <li><button v-on:click="test1">test1</button></li>
-            <li><button v-on:click="test2">test2</button></li>
-        </div>
-        <div class="subMenu">
-            <li><button v-on:click="test1">test3</button></li>
-            <li><button v-on:click="test2">test4</button></li>
-        </div>
-        <Content class="content" v-bind:page="page"/>
-    </nav>
-</body>
+    <div class="content">
+        <div>Content</div>
+        <div v-html="compiledHtml"></div>
+        <div v-html="test"></div>
+    </div>
 </template>
 
 <script setup lang="ts">
-import axios, { type AxiosResponse } from 'axios';
-import Content from './Content.vue';
+import axios from 'axios';
+import { ref } from 'vue';
+import type { Ref } from 'vue';
 
-let menuList: object[] = [];
-let page = 'test.html';
+let compiledHtml: Ref<string> = ref('');
+const test = 'a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>'
+        + 'a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>'
+        + 'a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>'
+        + 'a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>';
 
-const test1 = function():void {
-    console.log('test1');
-}
+const props = defineProps<{
+    page: string;
+}>()
 
-const test2 = function():void {
-    console.log('test2');
-}
-
-axios.get('/joplin/menu/r', {params: {id: 'all'}})
-    .then((res: AxiosResponse) => {
-        menuList = res.data;
-        console.log(menuList);
+axios.get('/joplin/page/r', {params: {page: props.page}})
+    .then((res) => {
+        compiledHtml.value = res.data;
     });
 
 </script>
 
 <style scoped>
-.wrap {
-    display: flex;
-}
-
-.sideMenu {
-    position: fixed;
-    overflow: auto;
-    background-color: aqua;
-}
-
-.subMenu {
-    position: fixed;
-    overflow: auto;
-    margin-left: 10%;
-    background-color: aquamarine;
-}
-
 .content {
     margin-left: 25%;
 }

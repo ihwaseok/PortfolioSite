@@ -30,7 +30,7 @@ router.get('/page/r', function (req, res, next) {
 });
 router.get('/menu/r', function (req, res, next) {
     if (req.query.id == 'all') {
-        connection.query('SELECT * FROM menu WHERE is_sub = "N"', function (err, row) {
+        connection.query('SELECT * FROM menu WHERE is_sub = "N" ORDER BY id', function (err, row) {
             if (err)
                 throw err;
             res.send(row);
