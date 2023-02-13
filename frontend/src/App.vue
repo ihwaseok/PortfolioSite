@@ -2,30 +2,31 @@
   <div id="app">
     <Header/>
     <div>
-      <JoplinMenu/>
-      <JoplinPage class="content" v-bind:page="page"/>
+      <JoplinMenu v-bind:onGetMenuPath="getMenuPath"/>
+      <JoplinPage ref="joplinPageRef"/>
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
-import axios, { type AxiosResponse } from 'axios';
 
+<script setup lang="ts">
+import { ref } from 'vue'
+import type { Ref } from 'vue'
 import Header from './components/Header.vue';
 import JoplinMenu from './components/JoplinMenu.vue';
 import JoplinPage from './components/JoplinPage.vue';
 
 
-let menuList: object[] = [];
-let page = 'test.html';
+let joplinPageRef: Ref<typeof JoplinPage | null | undefined> = ref();
 
+// JoplinMenu로 부터 메뉴 Path 가져오기 (Emit-Receive)
+// 받아온 메뉴 Path로 JoplinPage의 메소드 호출
+function getMenuPath (menuPath: string): void {
+  joplinPageRef.value!.getHtmlText(menuPath);
+}
 
-axios.get('/joplin/menu/r', {params: {id: 'all'}})
-  .then((res: AxiosResponse) => {
-      menuList = res.data;
-      console.log(menuList);
-  });
 </script>
+
 
 <style scoped>
 </style>
