@@ -11,7 +11,13 @@
                     {{ item.name }}
                 </a>
             </li>
-            <li class="nav-item"><a href="#" class="nav-link"><font-awesome-icon icon="phone"/></a></li>
+            <div class="vr mg-l-1"></div>
+            <li class="nav-item">
+                <a href="https://github.com/ihwaseok/PortpolioSite" class="nav-link">
+                    <github-icon/>
+                    Github
+                </a>
+            </li>
         </ul>
     </header>
 </div>
@@ -21,6 +27,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import type { Ref } from 'vue'
+import GithubIcon from '../assets/icon/github.vue'
 
 
 const menuList = [{id: '1', name: '공부 기록'}, {id: '2', name: '테스트'}]
@@ -41,5 +48,8 @@ function menuSelect (menuId: string): void {
 }
 .header-nav {
     margin-right: 4rem;
+}
+.mg-l-1 {
+    margin-left:1rem;
 }
 </style>
