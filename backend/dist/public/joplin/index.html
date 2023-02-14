@@ -5,10 +5,10 @@
 						<meta charset="UTF-8">
 						<meta name="viewport" content="width=device-width, initial-scale=1" />
 						<link rel="stylesheet" href="pluginAssets/katex/katex.css"><script type="application/javascript" src="pluginAssets/mermaid/mermaid.min.js"></script><script type="application/javascript" src="pluginAssets/mermaid/mermaid_render.js"></script><link rel="stylesheet" href="pluginAssets/highlight.js/atom-one-light.css">
-						<title>기본 키워드</title>
+						<title>개요</title>
 					</head>
 					<body>
-						<div class="exported-note"><div class="exported-note-title">기본 키워드</div>
+						<div class="exported-note"><div class="exported-note-title">개요</div>
 
 <style>
 		/* https://necolas.github.io/normalize.css/ */
@@ -466,220 +466,27 @@
   color: #069;
 }
 
-/* template 1 end */</style><div id="rendered-md"><h2 id="확정-할당-어선셜">확정 할당 어선셜</h2>
+/* template 1 end */</style><div id="rendered-md"><h2 id="프로그래밍-언어">프로그래밍 언어</h2>
 <ul>
-<li><code class="inline-code">!</code>를 사용하여 값이 무조건 할당되어 있다고 컴파일러에게 전달</li>
-<li>값이 없어도 변수나 객체를 사용 가능하게 한다</li>
+<li>기계에게 명령이나 연산을 시킬 목적으로 설계되어 기계와 의사소통을 할 수 있게 해주는 언어<br>
+<br class="jop-noMdConv"/></li>
 </ul>
-<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="typescript" data-joplin-source-open="```typescript&#10;" data-joplin-source-close="&#10;```">let x: number;
-console.log(x! + x!);</pre><pre class="hljs"><code><span class="hljs-keyword">let</span> <span class="hljs-attr">x</span>: <span class="hljs-built_in">number</span>;
-<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(x! + x!);</code></pre></div>
-<br class="jop-noMdConv"/>
-<h2 id="타입-별칭">타입 별칭</h2>
+<h2 id="스크립트-언어">스크립트 언어</h2>
 <ul>
-<li>타입에 별칭을 붙여 간단하게 타입을 가리킬 수 있다</li>
+<li>소프트웨어를 제어하기 위해 사용되는 프로그래밍 언어</li>
+<li>소스 코드를 컴파일하지 않고도 실행 가능</li>
+<li>내장된 번역기에 의해 바로 실행된다<br>
+→ 번역 과정을 거치기 때문에 비 스크립트 언어보다 느리다</li>
+<li>일괄 처리 작업이나 웹 애플리케이션에 주로 사용된다</li>
+<li>서버 사이드 스크립트 = 실행 결과를 확인하기 위해 웹서버에 거쳐야 한다<br>
+ex) ASP, PHP, JSP, Python ...</li>
+<li>클라이언트 스크립트 = 내장된 번역기(브라우저)에 의해 사용자쪽에서 바로 실행된다<br>
+ex) JavaScript, VBScript. ..<br>
+<br class="jop-noMdConv"/></li>
 </ul>
-<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="typescript" data-joplin-source-open="```typescript&#10;" data-joplin-source-close="&#10;```">type Test = {
-    name: string,
-    age: number
-}
-
-const x : Test = {
-    name : 'x',
-    age : 10
-}
-const y : Test = {
-    name : 'y',
-    age : 10
-}</pre><pre class="hljs"><code><span class="hljs-keyword">type</span> <span class="hljs-title class_">Test</span> = {
-    <span class="hljs-attr">name</span>: <span class="hljs-built_in">string</span>,
-    <span class="hljs-attr">age</span>: <span class="hljs-built_in">number</span>
-}
-
-<span class="hljs-keyword">const</span> x : <span class="hljs-title class_">Test</span> = {
-    name : <span class="hljs-string">&#x27;x&#x27;</span>,
-    age : <span class="hljs-number">10</span>
-}
-<span class="hljs-keyword">const</span> y : <span class="hljs-title class_">Test</span> = {
-    name : <span class="hljs-string">&#x27;y&#x27;</span>,
-    age : <span class="hljs-number">10</span>
-}</code></pre></div>
-<br class="jop-noMdConv"/>
-<h2 id="인터페이스">인터페이스</h2>
+<h2 id="인터프리트-언어">인터프리트 언어</h2>
 <ul>
-<li>인터페이스를 이용하여 특정 타입을 생성 가능</li>
-</ul>
-<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="typescript" data-joplin-source-open="```typescript&#10;" data-joplin-source-close="&#10;```">interface Test {
-    name: string;
-    grade: number;
-}
-function printInfo(person : Test) {
-    console.log(`이름: ${person.name}`);
-    console.log(`학년: ${person.grade}`);
-}
-
-let x = {name : 'x', grade : 2};
-printInfo(x);</pre><pre class="hljs"><code><span class="hljs-keyword">interface</span> Test {
-    <span class="hljs-attr">name</span>: <span class="hljs-built_in">string</span>;
-    <span class="hljs-attr">grade</span>: <span class="hljs-built_in">number</span>;
-}
-<span class="hljs-keyword">function</span> <span class="hljs-title function_">printInfo</span>(<span class="hljs-params">person : Test</span>) {
-    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`이름: <span class="hljs-subst">${person.name}</span>`</span>);
-    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`학년: <span class="hljs-subst">${person.grade}</span>`</span>);
-}
-
-<span class="hljs-keyword">let</span> x = {name : <span class="hljs-string">&#x27;x&#x27;</span>, grade : <span class="hljs-number">2</span>};
-<span class="hljs-title function_">printInfo</span>(x);</code></pre></div>
-<br class="jop-noMdConv"/>
-<h2 id="클래스">클래스</h2>
-<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="typescript" data-joplin-source-open="```typescript&#10;" data-joplin-source-close="&#10;```">class Test {
-    name:string;
-    constructor() {
-        this.name = 'abc';
-    }
-}
-
-const x = new Test();
-console.log(x.name);</pre><pre class="hljs"><code><span class="hljs-keyword">class</span> <span class="hljs-title class_">Test</span> {
-    <span class="hljs-attr">name</span>:<span class="hljs-built_in">string</span>;
-    <span class="hljs-title function_">constructor</span>(<span class="hljs-params"></span>) {
-        <span class="hljs-variable language_">this</span>.<span class="hljs-property">name</span> = <span class="hljs-string">&#x27;abc&#x27;</span>;
-    }
-}
-
-<span class="hljs-keyword">const</span> x = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Test</span>();
-<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(x.<span class="hljs-property">name</span>);</code></pre></div>
-<br class="jop-noMdConv"/>
-<h2 id="제네릭-클래스">제네릭 클래스</h2>
-<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="typescript" data-joplin-source-open="```typescript&#10;" data-joplin-source-close="&#10;```">class Test&lt;T&gt; {
-    public Contents!: T;
-}
-
-let x = new Test&lt;string&gt;();
-x.Contents = &quot;Beef&quot;;</pre><pre class="hljs"><code><span class="hljs-keyword">class</span> <span class="hljs-title class_">Test</span>&lt;T&gt; {
-    <span class="hljs-keyword">public</span> <span class="hljs-title class_">Contents</span>!: T;
-}
-
-<span class="hljs-keyword">let</span> x = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Test</span>&lt;<span class="hljs-built_in">string</span>&gt;();
-x.<span class="hljs-property">Contents</span> = <span class="hljs-string">&quot;Beef&quot;</span>;</code></pre></div>
-<br class="jop-noMdConv"/>
-<h2 id="유틸리티-타입">유틸리티 타입</h2>
-<ul>
-<li>
-<p>타입을 변환하는 과정을 돕는 역할</p>
-</li>
-<li>
-<p><code class="inline-code">Readonly&lt;Type&gt;</code></p>
-<ul>
-<li>객체를 처음 생성할때 값을 할당하고 그 뒤에는 변경되지 않도록 하는 속성</li>
-</ul>
-<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="typescript" data-joplin-source-open="```typescript&#10;" data-joplin-source-close="&#10;```">let test: readonly string[] = [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;];</pre><pre class="hljs"><code><span class="hljs-keyword">let</span> <span class="hljs-attr">test</span>: <span class="hljs-keyword">readonly</span> <span class="hljs-built_in">string</span>[] = [<span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-string">&quot;b&quot;</span>, <span class="hljs-string">&quot;c&quot;</span>];</code></pre></div>
-</li>
-<li>
-<p><code class="inline-code">Partial&lt;Type&gt;</code></p>
-<ul>
-<li>객체 내 프로퍼티를 일부만 사용할 수 있도록 한다</li>
-<li>인터페이스에서 <code class="inline-code">?</code>를 붙여 <code class="inline-code">Optional</code>로 만드는 것과 동일한 기능</li>
-</ul>
-<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="typescript" data-joplin-source-open="```typescript&#10;" data-joplin-source-close="&#10;```">interface Test {
-    name: string,
-    grade: number,
-    isAdult: boolean
-}
-
-let x : Partial&lt;Test&gt; = {name : 'x', grade : 2};</pre><pre class="hljs"><code><span class="hljs-keyword">interface</span> Test {
-    <span class="hljs-attr">name</span>: <span class="hljs-built_in">string</span>,
-    <span class="hljs-attr">grade</span>: <span class="hljs-built_in">number</span>,
-    <span class="hljs-attr">isAdult</span>: <span class="hljs-built_in">boolean</span>
-}
-
-<span class="hljs-keyword">let</span> x : <span class="hljs-title class_">Partial</span>&lt;<span class="hljs-title class_">Test</span>&gt; = {name : <span class="hljs-string">&#x27;x&#x27;</span>, grade : <span class="hljs-number">2</span>};</code></pre></div>
-</li>
-<li>
-<p><code class="inline-code">Required&lt;Type&gt;</code></p>
-<ul>
-<li>객체 내 프로퍼티를 필수적으로 만든다</li>
-</ul>
-<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="typescript" data-joplin-source-open="```typescript&#10;" data-joplin-source-close="&#10;```">let x : Required&lt;Test&gt; = {name : 'x', grade : 2, isAdult : false};</pre><pre class="hljs"><code><span class="hljs-keyword">let</span> x : <span class="hljs-title class_">Required</span>&lt;<span class="hljs-title class_">Test</span>&gt; = {name : <span class="hljs-string">&#x27;x&#x27;</span>, grade : <span class="hljs-number">2</span>, isAdult : <span class="hljs-literal">false</span>};</code></pre></div>
-</li>
-<li>
-<p><code class="inline-code">Record&lt;Type&gt;</code></p>
-<ul>
-<li>키와 값의 쌍으로 타입을 정의 가능</li>
-</ul>
-<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="typescript" data-joplin-source-open="```typescript&#10;" data-joplin-source-close="&#10;```">const test: Record&lt;string, number&gt; = {
-    alpha : 1,
-    beta : 2
-};</pre><pre class="hljs"><code><span class="hljs-keyword">const</span> <span class="hljs-attr">test</span>: <span class="hljs-title class_">Record</span>&lt;<span class="hljs-built_in">string</span>, <span class="hljs-built_in">number</span>&gt; = {
-    alpha : <span class="hljs-number">1</span>,
-    beta : <span class="hljs-number">2</span>
-};</code></pre></div>
-</li>
-<li>
-<p><code class="inline-code">Pick&lt;Type, Keys&gt;</code></p>
-<ul>
-<li>지정한 타입 내에서 필요한 키만 가져와서 사용 가능</li>
-</ul>
-<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="typescript" data-joplin-source-open="```typescript&#10;" data-joplin-source-close="&#10;```">let x: Pick&lt;Test, &quot;name&quot; | &quot;grade&quot;&gt; = {
-    name : 'x',
-    grade : 2,
-    isAdult : false // 에러
-};</pre><pre class="hljs"><code><span class="hljs-keyword">let</span> <span class="hljs-attr">x</span>: <span class="hljs-title class_">Pick</span>&lt;<span class="hljs-title class_">Test</span>, <span class="hljs-string">&quot;name&quot;</span> | <span class="hljs-string">&quot;grade&quot;</span>&gt; = {
-    name : <span class="hljs-string">&#x27;x&#x27;</span>,
-    grade : <span class="hljs-number">2</span>,
-    isAdult : <span class="hljs-literal">false</span> <span class="hljs-comment">// 에러</span>
-};</code></pre></div>
-</li>
-<li>
-<p><code class="inline-code">Omit&lt;Type, Keys&gt;</code></p>
-<ul>
-<li>지정한 타입 내에서 불필요한 키를 선택 가능</li>
-</ul>
-<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="typescript" data-joplin-source-open="```typescript&#10;" data-joplin-source-close="&#10;```">let x: Omit&lt;Test, &quot;isAdult&quot;&gt; = {
-    name : 'x',
-    grade : 2,
-    isAdult : false // 에러
-}</pre><pre class="hljs"><code><span class="hljs-keyword">let</span> <span class="hljs-attr">x</span>: <span class="hljs-title class_">Omit</span>&lt;<span class="hljs-title class_">Test</span>, <span class="hljs-string">&quot;isAdult&quot;</span>&gt; = {
-    name : <span class="hljs-string">&#x27;x&#x27;</span>,
-    grade : <span class="hljs-number">2</span>,
-    isAdult : <span class="hljs-literal">false</span> <span class="hljs-comment">// 에러</span>
-}</code></pre></div>
-</li>
-<li>
-<p><code class="inline-code">Exclude&lt;Type1, Type2&gt;</code></p>
-<ul>
-<li><code class="inline-code">Type1</code>에서 <code class="inline-code">Type2</code>를 제외한 나머지 타입으로 구성 가능</li>
-</ul>
-<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="typescript" data-joplin-source-open="```typescript&#10;" data-joplin-source-close="&#10;```">type TypeX = string | number | boolean;
-type TypeY = Exclude&lt;TypeX, number | boolean&gt;;</pre><pre class="hljs"><code><span class="hljs-keyword">type</span> <span class="hljs-title class_">Type</span>X = <span class="hljs-built_in">string</span> | <span class="hljs-built_in">number</span> | <span class="hljs-built_in">boolean</span>;
-<span class="hljs-keyword">type</span> <span class="hljs-title class_">Type</span>Y = <span class="hljs-title class_">Exclude</span>&lt;<span class="hljs-title class_">Type</span>X, <span class="hljs-built_in">number</span> | <span class="hljs-built_in">boolean</span>&gt;;</code></pre></div>
-</li>
-<li>
-<p><code class="inline-code">NonNullable&lt;Type&gt;</code></p>
-<ul>
-<li><code class="inline-code">null</code>, <code class="inline-code">undefined</code>를 제외한 타입을 생성한다</li>
-</ul>
-</li>
-<li>
-<p><code class="inline-code">ReturnType&lt;Type&gt;</code></p>
-<ul>
-<li>함수의 반환 타입이 반환되는 것을 의미한다</li>
-</ul>
-<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="typescript" data-joplin-source-open="```typescript&#10;" data-joplin-source-close="&#10;```">function test(a: number, b:number): void {}
-type x = ReturnType&lt;typeof test&gt;;
-// 함수의 반환타입 void 가 반환된다</pre><pre class="hljs"><code><span class="hljs-keyword">function</span> <span class="hljs-title function_">test</span>(<span class="hljs-params">a: <span class="hljs-built_in">number</span>, b:<span class="hljs-built_in">number</span></span>): <span class="hljs-built_in">void</span> {}
-<span class="hljs-keyword">type</span> x = <span class="hljs-title class_">ReturnType</span>&lt;<span class="hljs-keyword">typeof</span> test&gt;;
-<span class="hljs-comment">// 함수의 반환타입 void 가 반환된다</span></code></pre></div>
-</li>
-<li>
-<p><code class="inline-code">Parameters&lt;Type&gt;</code></p>
-<ul>
-<li>매개변수 타입들을 튜플 타입으로 묶어서 구성한다</li>
-</ul>
-<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="typescript" data-joplin-source-open="```typescript&#10;" data-joplin-source-close="&#10;```">type x = Parameters&lt;typeof test&gt;;
-// 매개변수 a:number, b:number 가 반환된다</pre><pre class="hljs"><code><span class="hljs-keyword">type</span> x = <span class="hljs-title class_">Parameters</span>&lt;<span class="hljs-keyword">typeof</span> test&gt;;
-<span class="hljs-comment">// 매개변수 a:number, b:number 가 반환된다</span></code></pre></div>
-</li>
+<li>프로그래머가 작성한 소스코드를 기계어로 변환하는 과정 없이 한줄씩 해석하여 바로 명령어를 실행하는 언어</li>
 </ul>
 </div></div>
 					</body>

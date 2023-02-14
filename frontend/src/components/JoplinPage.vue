@@ -29,6 +29,10 @@ function getHtmlText (path: string) {
         });
 }
 
+// Init
+const index: string = 'C:\\Users\\Seok\\Documents\\GitHub\\PortpolioSite\\backend\\dist\\public\\joplin\\index.html';
+getHtmlText(index);
+
 // App 에서 getHtmlText를 호출할 수 있도록 설정
 defineExpose({ getHtmlText });
 
