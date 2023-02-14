@@ -22,9 +22,7 @@ let joplinPageRef: Ref<typeof JoplinPage | null | undefined> = ref();
 // JoplinMenu로 부터 메뉴 Path 가져오기 (Emit-Receive)
 // 받아온 메뉴 Path로 JoplinPage의 메소드 호출
 function getMenuPath (menuPath: string): void {
-  if (menuPath != undefined) {
-    joplinPageRef.value!.getHtmlText(menuPath);
-  }
+  joplinPageRef.value!.getHtmlText(menuPath);
 }
 
 </script>

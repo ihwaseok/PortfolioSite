@@ -23,10 +23,12 @@ let htmlText: Ref<string> = ref('');
 
 // 메뉴 path에 있는 html 파일의 내용을 가져오기
 function getHtmlText (path: string) {
-    axios.get('/joplin/page/r', {params: {pagePath: path}})
-        .then((res) => {
-            htmlText.value = res.data;
-        });
+    if (path != null && path != undefined) {
+        axios.get('/joplin/page/r', {params: {pagePath: path}})
+            .then((res) => {
+                htmlText.value = res.data;
+            });
+    }
 }
 
 // Init

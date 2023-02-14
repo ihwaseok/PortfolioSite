@@ -135,10 +135,12 @@ export default {
 
 		// 받아온 메뉴 Id로 서브 메뉴 리스트 가져오기
 		getSubMenuList (menuId: string) {
-			axios.get('/joplin/menu/r', {params: {id: menuId}})
-				.then((res: AxiosResponse) => {
-					this.subMenuList = res.data;
-				});
+			if (menuId != null && menuId != undefined) {
+				axios.get('/joplin/menu/r', {params: {id: menuId}})
+					.then((res: AxiosResponse) => {
+						this.subMenuList = res.data;
+					});
+			}
 		},
 
 		// JoplinSubList 에서 클릭한 메뉴의 Path를 받아와서 App 으로 전달 (Emit, Emit-Receive)

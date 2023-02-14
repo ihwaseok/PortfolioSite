@@ -1,7 +1,8 @@
 <template>
 <li v-for="(item) in props.menuList" v-bind:key="item.ID">
     <a href="#" class="menu-item" v-on:click="menuSelect" v-bind="{menuId: item.ID}">
-		<font-awesome-icon v-if="item.CHILD_MENU != undefined" class="menu-arrow" icon="fa-solid fa-angle-right"/>
+		
+		<ArrowIcon v-if="item.CHILD_MENU != undefined" class="menu-arrow" />
 		{{ item.NAME }}
 	</a>
 
@@ -14,6 +15,7 @@
 
 <script setup lang="ts">
 import type { MenuData } from '../custom/customType'
+import ArrowIcon from '../assets/angle-right-solid.vue'
 
 
 const props = defineProps<{
