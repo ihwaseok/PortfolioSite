@@ -1,16 +1,15 @@
 <template>
-    <div class="container-fluid">
+<div class="container-fluid">
 
-        <!-- content -->
-        <main role="main">
+    <!-- content -->
+    <main role="main">
 
-            <!-- full box -->
-            <div class="content-box mb-3 bg-white shadow-sm" v-html="htmlText">
-            </div>
+        <!-- page -->
+        <div class="content-box" v-html="htmlText"></div>
 
-        </main>
+    </main>
 
-    </div>
+</div>
 </template>
 
 
@@ -37,5 +36,11 @@ defineExpose({ getHtmlText });
 
 
 <style scoped>
-
+.content-div {
+    margin-top: 5rem;
+}
+.content-box {
+  padding: 1.25rem;
+  border-radius: 0.25rem;
+}
 </style>

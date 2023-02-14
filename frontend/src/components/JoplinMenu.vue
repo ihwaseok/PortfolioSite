@@ -151,9 +151,6 @@ export default {
 
 
 <style scoped>
-body {
-	overflow-x: hidden;
-}
 .wrapper {
 	min-height: 100vh;
 }
