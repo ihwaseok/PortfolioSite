@@ -11,11 +11,19 @@
                     {{ item.name }}
                 </a>
             </li>
+
             <div class="vr mg-l-1"></div>
-            <li class="nav-item">
-                <a href="https://github.com/ihwaseok/PortpolioSite" class="nav-link">
-                    <github-icon/>
+
+            <li>
+                <a href="https://github.com/ihwaseok/PortpolioSite" class="nav-link pd-r">
+                    <GithubIcon/>
                     Github
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-link" v-on:click="makeCsv">
+                    <CsvIcon/>
+                    Joplin.csv
                 </a>
             </li>
         </ul>
@@ -25,17 +33,29 @@
 
 
 <script setup lang="ts">
+import axios from 'axios';
 import { ref } from 'vue'
 import type { Ref } from 'vue'
 import GithubIcon from '../assets/icon/github.vue'
+import CsvIcon from '../assets/icon/file-csv-solid.vue'
 
 
-const menuList = [{id: '1', name: '공부 기록'}, {id: '2', name: '테스트'}]
+const menuList = [{id: '1', name: '공부 기록'}, {id: '2', name: '테스트'}];
 let selectedId: Ref<string> = ref('1');
 
+// 메뉴 선택 이벤트
 function menuSelect (menuId: string): void {
     selectedId.value = menuId;
 }
+
+// Joplin.csv 클릭 이벤트
+function makeCsv (): void {
+    axios.get('/joplin/csv/c')
+            .then((res) => {
+                console.log('vue');
+            });
+}
+
 </script>
 
 
@@ -47,9 +67,12 @@ function menuSelect (menuId: string): void {
     padding-left: 0.65rem;
 }
 .header-nav {
-    margin-right: 4rem;
+    margin-right: 1rem;
 }
 .mg-l-1 {
     margin-left:1rem;
+}
+.pd-r {
+    padding-right: 0.3rem;
 }
 </style>

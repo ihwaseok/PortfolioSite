@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 import mysql, { Connection, MysqlError } from 'mysql';
 import path from 'path';
+import fs from 'fs'
 
 // 라우터 객체 생성
 const router = express.Router();
@@ -62,6 +63,16 @@ router.get('/menu/r', function(req: Request, res: Response, next: NextFunction) 
             res.send(row);
         });
     }
+});
+
+router.get('/csv/c', function(req: Request, res: Response, next: NextFunction) {
+    console.log('express---------------------------------------------------');
+    // html파일 md파일로 읽도록 변경 먼저
+    fs.readdir(path.join(__dirname, '../joplin'), function (err: Error | null, items: string[] | null) {
+        console.log(items);
+    })
+
+    res.send();
 });
 
 export default router;

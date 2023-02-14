@@ -5,6 +5,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const mysql_1 = __importDefault(require("mysql"));
+const path_1 = __importDefault(require("path"));
+const fs_1 = __importDefault(require("fs"));
 // 라우터 객체 생성
 const router = express_1.default.Router();
 // 커넥션 생성
@@ -61,5 +63,12 @@ router.get('/menu/r', function (req, res, next) {
             res.send(row);
         });
     }
+});
+router.get('/csv/c', function (req, res, next) {
+    console.log('express---------------------------------------------------');
+    fs_1.default.readdir(path_1.default.join(__dirname, '../joplin'), function (err, items) {
+        console.log(items);
+    });
+    res.send();
 });
 exports.default = router;
