@@ -7,6 +7,7 @@ const express_1 = __importDefault(require("express"));
 const mysql_1 = __importDefault(require("mysql"));
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
+const readline_1 = __importDefault(require("readline"));
 // 라우터 객체 생성
 const router = express_1.default.Router();
 // 커넥션 생성
@@ -27,7 +28,32 @@ connection.connect(function (err) {
 });
 router.get('/page/r', function (req, res, next) {
     if (typeof req.query.pagePath == 'string') {
-        res.sendFile(req.query.pagePath);
+        const readPath = path_1.default.join(__dirname, '../../static/joplin' + req.query.pagePath);
+        const resPath = '/joplin';
+        const reader = fs_1.default.createReadStream(readPath);
+        const lineEvent = readline_1.default.createInterface(reader);
+        let updatedHtml = [];
+        lineEvent.on('line', (line) => {
+            if (line.includes('pluginAssets') && !line.includes('joplin')) {
+                line = line.replace(/href=/g, 'src=');
+                line = line.replace(/pluginAssets/g, resPath + '/pluginAssets');
+            }
+            if (line.includes('_resources') && !line.includes('joplin')) {
+                line = line.replace(/\.\.\//g, '');
+                line = line.replace(/_resources/g, resPath + '/_resources');
+            }
+            updatedHtml.push(Buffer.from(line + '\r'));
+        });
+        lineEvent.on('close', () => {
+            fs_1.default.writeFile(readPath, Buffer.concat(updatedHtml).toString(), (err) => {
+                if (err)
+                    throw err;
+                res.sendFile(readPath, (err) => {
+                    if (err)
+                        throw err;
+                });
+            });
+        });
     }
 });
 router.get('/menu/r', function (req, res, next) {
@@ -66,6 +92,7 @@ router.get('/menu/r', function (req, res, next) {
 });
 router.get('/csv/c', function (req, res, next) {
     console.log('express---------------------------------------------------');
+    // html파일 md파일로 읽도록 변경 먼저
     fs_1.default.readdir(path_1.default.join(__dirname, '../joplin'), function (err, items) {
         console.log(items);
     });

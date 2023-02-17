@@ -14,7 +14,7 @@
 
 
 <script setup lang="ts">
-import axios from 'axios';
+import axios, { type AxiosResponse } from 'axios';
 import { ref } from 'vue';
 import type { Ref } from 'vue';
 
@@ -25,14 +25,14 @@ let htmlText: Ref<string> = ref('');
 function getHtmlText (path: string) {
     if (path != null && path != undefined) {
         axios.get('/joplin/page/r', {params: {pagePath: path}})
-            .then((res) => {
+            .then((res: AxiosResponse) => {
                 htmlText.value = res.data;
             });
     }
 }
 
 // Init
-const index: string = 'C:\\Users\\Seok\\Documents\\GitHub\\PortpolioSite\\backend\\dist\\joplin\\index.html';
+const index: string = 'C:\\Users\\Seok\\Documents\\GitHub\\PortpolioSite\\backend\\static\\joplin\\index.html';
 getHtmlText(index);
 
 // App 에서 getHtmlText를 호출할 수 있도록 설정

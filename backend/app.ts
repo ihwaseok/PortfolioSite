@@ -24,7 +24,7 @@ const connection = mysql.createConnection({
   port: 3306,
   user: 'root',
   password: '1234',
-  database: 'pwa_crud'
+  database: 'portpolio_site'
 });
 
 // DB 연결
@@ -47,6 +47,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
 app.use('/joplin', joplinRouter);
+
+// 리소스 경로 설정
+app.use('/joplin', express.static('/static/joplin'));
 
 // catch 404 and forward to error handler
 app.use(function(req:Request, res:Response, next:NextFunction) {
