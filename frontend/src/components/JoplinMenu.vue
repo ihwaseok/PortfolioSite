@@ -121,11 +121,11 @@ export default {
 		// 메뉴 리스트 정렬기준
 		menuSortStandard (a: MenuData, b: MenuData) {
 			if (a == null || b == null)
-				return 1;
+				return -1;
 			if (a.SORT_NO > b.SORT_NO)
-				return 1;
+				return -1;
 				
-			return 1;
+			return -1;
 		},
 
 		// JoplinRecursiveList 에서 클릭한 메뉴의 Id를 받아오기 (Emit-Receive)
