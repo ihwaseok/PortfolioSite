@@ -16,7 +16,7 @@ const connection = mysql_1.default.createConnection({
     port: 3306,
     user: 'root',
     password: '1234',
-    database: 'pwa_crud'
+    database: 'portpolio_site'
 });
 // DB 연결
 connection.connect(function (err) {
@@ -26,48 +26,29 @@ connection.connect(function (err) {
         throw err;
     }
 });
+// Html 파일 가져오기
 router.get('/page/r', function (req, res, next) {
     if (typeof req.query.pagePath == 'string') {
         const readPath = path_1.default.join(__dirname, '../../static/joplin' + req.query.pagePath);
-        const resPath = '/joplin';
-        const reader = fs_1.default.createReadStream(readPath);
-        const lineEvent = readline_1.default.createInterface(reader);
-        let updatedHtml = [];
-        lineEvent.on('line', (line) => {
-            if (line.includes('pluginAssets') && !line.includes('joplin')) {
-                line = line.replace(/href=/g, 'src=');
-                line = line.replace(/pluginAssets/g, resPath + '/pluginAssets');
-            }
-            if (line.includes('_resources') && !line.includes('joplin')) {
-                line = line.replace(/\.\.\//g, '');
-                line = line.replace(/_resources/g, resPath + '/_resources');
-            }
-            updatedHtml.push(Buffer.from(line + '\r'));
-        });
-        lineEvent.on('close', () => {
-            fs_1.default.writeFile(readPath, Buffer.concat(updatedHtml).toString(), (err) => {
-                if (err)
-                    throw err;
-                res.sendFile(readPath, (err) => {
-                    if (err)
-                        throw err;
-                });
-            });
+        res.sendFile(readPath, (err) => {
+            if (err)
+                throw err;
         });
     }
 });
+// 메뉴 데이터 가져오기
 router.get('/menu/r', function (req, res, next) {
     if (req.query.id == 'all') {
         const query = `
-            select a.id AS ID, a.name AS NAME, a.parent_id AS PARENT_ID, a.path AS PATH, a.sort_no AS SORT_NO, a.is_sub as IS_DIR
-                    , group_concat(b.id order by b.sort_no) as CHILD_MENU_ID
-            from menu a
-            left outer join menu b
-                on a.id = b.parent_id
-                and b.is_sub = 'N'
-            where a.is_sub = 'N'
-            group by a.id, a.name, a.parent_id, a.path, a.sort_no, a.is_sub
-            order by a.id
+            SELECT A.ID, A.NAME, A.PARENT_ID, A.PATH, A.SORT_NO, A.IS_DIR
+                    , GROUP_CONCAT(B.ID ORDER BY B.SORT_NO) AS CHILD_MENU_ID
+            FROM admin_menu A
+            LEFT OUTER JOIN admin_menu B
+                ON A.ID = B.PARENT_ID
+                AND B.IS_DIR = 'N'
+            WHERE A.IS_DIR = 'N'
+            GROUP BY A.ID, A.NAME, A.PARENT_ID, A.PATH, A.SORT_NO, A.IS_DIR
+            ORDER BY A.ID
         `;
         connection.query(query, function (err, row) {
             if (err)
@@ -77,11 +58,11 @@ router.get('/menu/r', function (req, res, next) {
     }
     else {
         const query = `
-            select a.id AS ID, a.name AS NAME, a.parent_id AS PARENT_ID, a.path AS PATH, a.sort_no AS SORT_NO, a.is_sub as IS_DIR
-            from menu a
-            where a.parent_id = ${req.query.id}
-            and a.is_sub = 'Y'
-            order by a.id
+            SELECT A.ID, A.NAME, A.PARENT_ID, A.PATH, A.SORT_NO, A.IS_DIR
+            FROM admin_menu A
+            WHERE A.PARENT_ID = ${req.query.id}
+            AND A.ID_DIR = 'Y'
+            ORDER BY A.ID
         `;
         connection.query(query, function (err, row) {
             if (err)
@@ -90,12 +71,105 @@ router.get('/menu/r', function (req, res, next) {
         });
     }
 });
+// Joplin Sync 동작
+// 1. joplin 하위 폴더를 탐색하며 얻은 데이터를 DB에 저장
+// 2. 탐색하면서 html 파일 내부의 리소스 경로 수정
 router.get('/csv/c', function (req, res, next) {
-    console.log('express---------------------------------------------------');
-    // html파일 md파일로 읽도록 변경 먼저
-    fs_1.default.readdir(path_1.default.join(__dirname, '../joplin'), function (err, items) {
-        console.log(items);
+    let dataList = [];
+    const joplinDir = path_1.default.join(__dirname, '../../static/joplin');
+    const option = {
+        exceptList: ['_resources', 'pluginAssets', 'index.html'],
+        parentId: '',
+        rootDir: joplinDir
+    };
+    // 재귀 탐색으로 dataList에 데이터를 삽입 & Html 파일의 리소스 경로 수정
+    searchRecursive(joplinDir, dataList, option);
+    // 삽입전 테이블 데이터 삭제
+    const deleteQuery = 'TRUNCATE TABLE admin_menu';
+    connection.query(deleteQuery, function (err) {
+        if (err)
+            throw err;
     });
-    res.send();
+    // 데이터 삽입
+    const insertQuery = 'INSERT INTO admin_menu (ID, NAME, PARENT_ID, CATEGORY, PATH, IS_DIR, SORT_NO, CREATED_DT) VALUES ?';
+    const values = [];
+    for (const data of dataList) {
+        const value = [data.ID, data.NAME, data.PARENT_ID, data.CATEGORY, data.PATH, data.IS_DIR, data.SORT_NO, data.CREATE_DT];
+        values.push(value);
+    }
+    connection.query(insertQuery, [values], function (err, result) {
+        if (err)
+            throw err;
+        console.log('Joplin Sync Menu Data Inserted: ' + result.affectedRows);
+    });
+    res.send('Success');
 });
+// 하위 폴더를 재귀적으로 탐색 (Joplin Sync)
+function searchRecursive(dirPath, result, option) {
+    const childList = fs_1.default.readdirSync(dirPath);
+    let sortNo = 0;
+    for (const child of childList) {
+        if (!option.exceptList.includes(child)) {
+            const TIME_ZONE = 3240 * 10000;
+            const now = new Date(+new Date() + TIME_ZONE).toISOString().replace('T', ' ').substring(0, 19);
+            let data = { ID: '', NAME: '', PARENT_ID: '', CATEGORY: '', PATH: '', IS_DIR: '', SORT_NO: 0, CREATE_DT: '' };
+            sortNo++;
+            data.ID = option.parentId == '' ? sortNo.toString().padStart(3, '0') : option.parentId + '_' + sortNo.toString().padStart(3, '0');
+            data.PARENT_ID = option.parentId;
+            data.CATEGORY = 'Joplin';
+            data.PATH = dirPath + '/' + child;
+            data.SORT_NO = sortNo;
+            data.CREATE_DT = now;
+            if (child.includes('.html')) {
+                data.IS_DIR = 'N';
+                data.NAME = child.replace('.html', '');
+                // 리소스 경로 수정
+                updateResoucePath(data.PATH);
+            }
+            else {
+                data.IS_DIR = 'Y';
+                data.NAME = child;
+                // 재귀에 들어가기 전에 현재 ID를 parent ID로
+                option.parentId = data.ID;
+                // 재귀함수
+                searchRecursive(data.PATH, result, option);
+                // 재귀에서 빠져 나온경우 parentId 맞춰줌
+                let idList = option.parentId.split('_');
+                idList.pop();
+                option.parentId = idList.join('_');
+            }
+            data.PATH = data.PATH.replace(option.rootDir, '');
+            result.push(data);
+        }
+    }
+}
+// Html 파일의 리소스 경로 수정 (Joplin Sync)
+function updateResoucePath(path) {
+    const resPath = '/joplin';
+    const reader = fs_1.default.createReadStream(path);
+    const lineEvent = readline_1.default.createInterface(reader);
+    let updatedHtml = [];
+    // 한줄씩 읽으면서 처리
+    lineEvent.on('line', (line) => {
+        // css 경로 수정
+        // css 파일은 frontend의 main.ts에서 등록하기 때문에 단순히 에러 안나도록 수정
+        if (line.includes('pluginAssets') && !line.includes('joplin')) {
+            line = line.replace(/href=/g, 'src=');
+            line = line.replace(/pluginAssets/g, resPath + '/pluginAssets');
+        }
+        // 이미지 파일 경로 수정
+        if (line.includes('_resources') && !line.includes('joplin')) {
+            line = line.replace(/\.\.\//g, '');
+            line = line.replace(/_resources/g, resPath + '/_resources');
+        }
+        updatedHtml.push(Buffer.from(line + '\r'));
+    });
+    // 파일 전부 읽은 뒤 이벤트
+    lineEvent.on('close', () => {
+        fs_1.default.writeFile(path, Buffer.concat(updatedHtml).toString(), (err) => {
+            if (err)
+                throw err;
+        });
+    });
+}
 exports.default = router;

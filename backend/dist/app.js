@@ -25,7 +25,7 @@ const connection = mysql_1.default.createConnection({
     port: 3306,
     user: 'root',
     password: '1234',
-    database: 'pwa_crud'
+    database: 'portpolio_site'
 });
 // DB 연결
 connection.connect(function (err) {

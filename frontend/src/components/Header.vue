@@ -48,11 +48,11 @@ function menuSelect (menuId: string): void {
     selectedId.value = menuId;
 }
 
-// Joplin.csv 클릭 이벤트
+// Joplin Sync 클릭 이벤트
 function makeCsv (): void {
     axios.get('/joplin/csv/c')
             .then((res) => {
-                console.log('vue');
+                console.log(res);
             });
 }
 
