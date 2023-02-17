@@ -29,26 +29,27 @@ connection.connect(function (err:MysqlError) {
 
 // Html 파일 가져오기
 router.get('/page/r', function(req:Request, res:Response, next:NextFunction) {
-    if (typeof req.query.pagePath == 'string') {
-        const readPath: string = path.join(__dirname, '../../static/joplin' + req.query.pagePath);
-        
-        res.sendFile(readPath, (err) => {
-            if (err) throw err;
-        });
-    }
+    const pagePath = req.query.pagePath?.toString();
+    const readPath: string = path.join(__dirname, '../../static/joplin' + pagePath);
+    
+    res.sendFile(readPath, (err) => {
+        if (err) throw err;
+    });
 });
 
 // 메뉴 데이터 가져오기
 router.get('/menu/r', function(req: Request, res: Response, next: NextFunction) {
-    if (req.query.id == 'all') {
+    const id = req.query.id?.toString();
+
+    if (id == 'all') {
         const query = `
             SELECT A.ID, A.NAME, A.PARENT_ID, A.PATH, A.SORT_NO, A.IS_DIR
                     , GROUP_CONCAT(B.ID ORDER BY B.SORT_NO) AS CHILD_MENU_ID
             FROM admin_menu A
             LEFT OUTER JOIN admin_menu B
                 ON A.ID = B.PARENT_ID
-                AND B.IS_DIR = 'N'
-            WHERE A.IS_DIR = 'N'
+                AND B.IS_DIR = 'Y'
+            WHERE A.IS_DIR = 'Y'
             GROUP BY A.ID, A.NAME, A.PARENT_ID, A.PATH, A.SORT_NO, A.IS_DIR
             ORDER BY A.ID
         `;
@@ -62,8 +63,8 @@ router.get('/menu/r', function(req: Request, res: Response, next: NextFunction) 
         const query = `
             SELECT A.ID, A.NAME, A.PARENT_ID, A.PATH, A.SORT_NO, A.IS_DIR
             FROM admin_menu A
-            WHERE A.PARENT_ID = ${req.query.id}
-            AND A.ID_DIR = 'Y'
+            WHERE A.PARENT_ID = '${id}'
+            AND A.IS_DIR = 'N'
             ORDER BY A.ID
         `;
 

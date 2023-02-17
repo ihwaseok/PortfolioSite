@@ -89,11 +89,11 @@ export default {
 				});
 		},
 
-		// 메뉴 리스트를 JoplinRecursiveList 에서 구성하기 위한 형식으로 변환
+		// 메뉴 리스트를 JoplinRecursiveList 컴포넌트 에서 구성하기 위한 형식으로 변환
 		// 최하단에서 부터 위로 올라오며 처리 (DB에서 받아오는 데이터는 정렬되어 있다)
 		convertMainMenuData (menuList: MenuData[]): MenuData[] {
 			let mainMenuList: MenuData[] = [];
-
+			
 			for (let i: number = menuList.length-1; i >= 0; i--) {
 				if (menuList[i].CHILD_MENU_ID != null && menuList[i].CHILD_MENU_ID != undefined) {
 					let childMenuId: string[] = menuList[i].CHILD_MENU_ID.split(',');
@@ -109,7 +109,7 @@ export default {
 					menuList[i].CHILD_MENU = childMenuList;
 				}
 				
-				if (menuList[i].PARENT_ID == null || menuList[i].PARENT_ID == undefined) {
+				if (menuList[i].PARENT_ID == '' || menuList[i].PARENT_ID == undefined) {
 					mainMenuList.push(menuList[i]);
 				}
 			}
