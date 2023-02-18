@@ -49,7 +49,7 @@ app.use('/api/users', usersRouter);
 app.use('/joplin', joplinRouter);
 
 // 리소스 경로 설정
-app.use('/joplin', express.static('/static/joplin'));
+app.use('/joplinRes', express.static(path.join(__dirname, '../static/joplin')));
 
 // catch 404 and forward to error handler
 app.use(function(req:Request, res:Response, next:NextFunction) {
