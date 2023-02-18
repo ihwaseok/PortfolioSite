@@ -171,7 +171,7 @@ type recursiveOption = {
 
 // Html 파일의 리소스 경로 수정 (Joplin Sync)
 function updateResoucePath (path: string): void {
-    const resPath: string = '/joplin';
+    const resPath: string = '/joplinRes';
     const reader = fs.createReadStream(path);
     const lineEvent = rl.createInterface(reader);
     let updatedHtml: Uint8Array[] = [];

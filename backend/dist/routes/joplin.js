@@ -148,7 +148,7 @@ function searchRecursive(dirPath, result, option) {
 }
 // Html 파일의 리소스 경로 수정 (Joplin Sync)
 function updateResoucePath(path) {
-    const resPath = '/joplin';
+    const resPath = '/joplinRes';
     const reader = fs_1.default.createReadStream(path);
     const lineEvent = readline_1.default.createInterface(reader);
     let updatedHtml = [];
