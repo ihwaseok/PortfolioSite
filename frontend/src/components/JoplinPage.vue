@@ -14,6 +14,9 @@
 
 
 <script setup lang="ts">
+import '@joplin/pluginAssets/highlight.js/atom-one-light.css'
+import '@joplin/pluginAssets/mermaid/mermaid.min.js'
+import '@joplin/pluginAssets/mermaid/mermaid_render.js'
 import axios, { type AxiosResponse } from 'axios';
 import { ref } from 'vue';
 import type { Ref } from 'vue';
@@ -32,8 +35,8 @@ function getHtmlText (path: string) {
 }
 
 // Init
-const index: string = '\\index.html';
-//getHtmlText(index);
+const index: string = '/index.html';
+getHtmlText(index);
 
 // App 에서 getHtmlText를 호출할 수 있도록 설정
 defineExpose({ getHtmlText });

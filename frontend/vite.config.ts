@@ -8,7 +8,8 @@ export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      '@joplin': fileURLToPath(new URL('./../backend/static/joplin', import.meta.url))
     }
   },
   build: {
@@ -18,6 +19,7 @@ export default defineConfig({
       external: [
         
       ]
-    }
+    },
+    chunkSizeWarningLimit: 1500
   }
 })
