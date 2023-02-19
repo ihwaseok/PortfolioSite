@@ -1,0 +1,6 @@
+# frontend 빌드 시 chunks 경고
+ 1. mermaid.min.js
+ 2. markdown-it
+
+# typescript 지원하지 않는 javascript 라이브러리
+ 1. frontend/markdown-it-textual-uml
