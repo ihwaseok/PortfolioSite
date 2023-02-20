@@ -189,17 +189,22 @@ function updateResoucePath (path: string): void {
         }
         */
 
-        // 메타데이터 삭제
+        // 메타 데이터 주석처리
         if (metaChk < 2) {
             if (line.includes('---')) {
                 metaChk++;
             }
 
-            line = '';
+            if (metaChk <= 2 && !line.includes('<!--')) {
+                line = '<!-- ' + line + ' -->';
+            }
+            else if (metaChk == 2) {
+                metaChk++;
+            }
         }
 
         // 이미지 파일 경로 수정
-        if (line.includes('src=') && !line.includes('joplinRes')) {
+        if (line.includes('.png') && !line.includes('joplinRes')) {
             line = line.replace(/\.\.\//g, '');
             line = line.replace(/_resources/g, resPath + '/_resources');
         }

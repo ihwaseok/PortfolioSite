@@ -1,0 +1,1 @@
+<!-- --- --><!-- title: DCL --><!-- updated: 2023-01-16 07:00:38Z --><!-- created: 2023-01-16 06:44:49Z --><!-- latitude: 37.44491680 --><!-- longitude: 127.13886840 --><!-- altitude: 0.0000 --><!-- --- -->## GRANT- 권한 부여```sqlGRANT ROLE_NAME TO USER_NAME;```<br>## REVOKE- 권한 제거```sqlREVOKE ROLE_NAME TO USER_NAME;```
