@@ -80,11 +80,11 @@ router.get('/csv/c', function (req, res, next) {
     let dataList = [];
     const joplinDir = path_1.default.join(__dirname, '../../static/joplin');
     const option = {
-        exceptList: ['_resources', 'pluginAssets', 'index.html'],
+        exceptList: ['_resources', 'pluginAssets', 'index.md'],
         parentId: '',
         rootDir: joplinDir
     };
-    // 재귀 탐색으로 dataList에 데이터를 삽입 & Html 파일의 리소스 경로 수정
+    // 재귀 탐색으로 dataList에 데이터를 삽입 & md 파일의 리소스 경로 수정
     searchRecursive(joplinDir, dataList, option);
     // 삽입전 테이블 데이터 삭제
     const deleteQuery = 'TRUNCATE TABLE admin_menu';
@@ -123,9 +123,9 @@ function searchRecursive(dirPath, result, option) {
             data.PATH = dirPath + '/' + child;
             data.SORT_NO = sortNo;
             data.CREATE_DT = now;
-            if (child.includes('.html')) {
+            if (child.includes('.md')) {
                 data.IS_DIR = 'N';
-                data.NAME = child.replace('.html', '');
+                data.NAME = child.replace('.md', '');
                 // 리소스 경로 수정
                 updateResoucePath(data.PATH);
             }
@@ -152,16 +152,26 @@ function updateResoucePath(path) {
     const reader = fs_1.default.createReadStream(path);
     const lineEvent = readline_1.default.createInterface(reader);
     let updatedHtml = [];
+    let metaChk = 0;
     // 한줄씩 읽으면서 처리
     lineEvent.on('line', (line) => {
+        /* html -> md 로 수정하면서 주석 처리
         // css 경로 수정
         // css 파일은 frontend의 main.ts에서 등록하기 때문에 단순히 에러 안나도록 수정
         if (line.includes('pluginAssets') && !line.includes('joplin')) {
             line = line.replace(/href=/g, 'src=');
             line = line.replace(/pluginAssets/g, resPath + '/pluginAssets');
         }
+        */
+        // 메타데이터 삭제
+        if (metaChk < 2) {
+            if (line.includes('---')) {
+                metaChk++;
+            }
+            line = '';
+        }
         // 이미지 파일 경로 수정
-        if (line.includes('_resources') && !line.includes('joplin')) {
+        if (line.includes('src=') && !line.includes('joplinRes')) {
             line = line.replace(/\.\.\//g, '');
             line = line.replace(/_resources/g, resPath + '/_resources');
         }
