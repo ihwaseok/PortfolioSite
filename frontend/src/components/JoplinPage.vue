@@ -19,7 +19,7 @@ import axios, { type AxiosResponse } from 'axios';
 import { ref } from 'vue';
 import type { Ref } from 'vue';
 import MarkDownIt from 'markdown-it'
-import mermaid from 'mermaid'
+import Mermaid from 'mermaid'
 import hljs from 'highlight.js'
 
 
@@ -61,7 +61,7 @@ function renderMermaid (html: string): string {
     if (mermaidList != null) {
         for (let item of mermaidList) {
             const beforeHtml = item.replace(/&gt;/gs, '>');
-            const svg: string = mermaid.render('mermaid', beforeHtml);
+            const svg: string = Mermaid.render('mermaid', beforeHtml);
             html = html.replace(item, svg);
         }
     }
