@@ -1,8 +1,8 @@
 <template>
 <li v-for="(item) in props.menuList" v-bind:key="item.ID">
-    <a href="#" class="menu-item" v-on:click="menuSelect" v-bind="{menuId: item.ID}">
+    <a href="#" class="menu-item" v-on:click="getSubMenuList"  v-on:dblclick="openChildList" v-bind="{menuId: item.ID}">
 		
-		<ArrowIcon v-if="item.CHILD_MENU != undefined" class="menu-arrow" />
+		<ArrowIcon class="menu-arrow" v-if="item.CHILD_MENU != undefined" v-on:click="openChildList"/>
 		{{ item.NAME }}
 	</a>
 
@@ -26,12 +26,25 @@ const emit = defineEmits<{
 	(e: 'getMenuId', menuId: string): void
 }>()
 
-// 메뉴 클릭 이벤트
-// 메뉴를 선택했을 경우 하위 리스트를 출력하고 화살표 애니메이션을 작동하기 위해 class를 조작
-// 메뉴 Id를 JoplinMenu 에게 전달 (Emit)
-function menuSelect (evt: Event): void {
-    const el: Partial<HTMLElement> = evt!.target!;
+// 서브 메뉴 리스트 출력
+// 메뉴를 선택했을 경우 메뉴 Id를 JoplinMenu 에게 전달 (Emit)
+function getSubMenuList (evt: Event): void {
+	const el: Partial<HTMLElement> = evt!.target!;
 	let menuId: string = el.getAttribute!('menuId')!;
+
+	emit('getMenuId', menuId);
+
+	evt.preventDefault(); // 상단이동 방지
+}
+
+// 하위 트리 활성화
+// 화살표를 선택했을 경우 하위 리스트를 출력하고 화살표 애니메이션을 작동하기 위해 class를 조작
+function openChildList (evt: Event): void {
+    let el: Partial<HTMLElement> = evt!.target!;
+	
+	if (el.getAttribute!('menuId') == null) {
+		el = el.parentElement!;
+	}
 
     if (el.nextElementSibling != null) {
         const ul: Element = el.nextElementSibling;
@@ -46,7 +59,7 @@ function menuSelect (evt: Event): void {
         }
     }
 
-	emit('getMenuId', menuId);
+	evt.preventDefault();
 }
 
 // 재귀 호출시 메뉴 Id 가져오기 (Emit-Receive)
