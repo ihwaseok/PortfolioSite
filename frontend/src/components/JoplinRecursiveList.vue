@@ -4,6 +4,7 @@
 		
 		<ArrowIcon class="menu-arrow" v-if="item.CHILD_MENU != undefined" v-on:click="openChildList"/>
 		{{ item.NAME }}
+		<a>({{ calculateNote(item, 0) }})</a>
 	</a>
 
 	<ul class="menu-item-sub list-unstyled" v-if="item.CHILD_MENU != undefined">
@@ -65,6 +66,19 @@ function openChildList (evt: Event): void {
 // 재귀 호출시 메뉴 Id 가져오기 (Emit-Receive)
 function getMenuId(menuId: string): void {
 	emit('getMenuId', menuId);
+}
+
+// 하위 트리를 포함한 노트의 개수 계산
+function calculateNote (item: MenuData, count: number): number {
+	count = count + item.SUB_CNT;
+
+	if (item.CHILD_MENU != undefined) {
+		for (let child of item.CHILD_MENU) {
+			count = calculateNote(child, count);
+		}
+	}
+
+	return count;
 }
 
 </script>

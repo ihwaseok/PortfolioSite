@@ -6,5 +6,6 @@ export type MenuData = {
     SORT_NO: number,
     IS_DIR: string,
     CHILD_MENU_ID: string,
-	CHILD_MENU: MenuData[]
+	CHILD_MENU: MenuData[],
+    SUB_CNT: number
 }

@@ -44,10 +44,14 @@ router.get('/menu/r', function (req, res, next) {
         const query = `
             SELECT A.ID, A.NAME, A.PARENT_ID, A.PATH, A.SORT_NO, A.IS_DIR
                     , GROUP_CONCAT(B.ID ORDER BY B.SORT_NO) AS CHILD_MENU_ID
+                    , COUNT(DISTINCT C.ID) AS SUB_CNT
             FROM admin_menu A
             LEFT OUTER JOIN admin_menu B
                 ON A.ID = B.PARENT_ID
                 AND B.IS_DIR = 'Y'
+            LEFT OUTER JOIN admin_menu C
+                ON A.ID = C.PARENT_ID
+                AND C.IS_DIR = 'N'
             WHERE A.IS_DIR = 'Y'
             GROUP BY A.ID, A.NAME, A.PARENT_ID, A.PATH, A.SORT_NO, A.IS_DIR
             ORDER BY A.ID
