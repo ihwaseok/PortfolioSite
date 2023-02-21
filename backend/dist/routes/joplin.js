@@ -176,7 +176,7 @@ function updateResoucePath(path) {
             }
         }
         // 이미지 파일 경로 수정
-        if (line.includes('.png') && !line.includes('joplinRes')) {
+        if (line.includes('_resources') && !line.includes('joplinRes')) {
             line = line.replace(/\.\.\//g, '');
             line = line.replace(/_resources/g, resPath + '/_resources');
         }
