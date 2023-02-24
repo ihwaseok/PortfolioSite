@@ -1,4 +1,8 @@
 <template>
+<span class="menu-title">
+	<a>{{ menuName }}</a>
+</span>
+
 <li v-for="(item) in props.menuList" v-bind:key="item.ID">
     <a href="#" class="menu-item" v-on:click="subMenuSelect" v-bind="{menuPath: item.PATH}">
 		{{ item.NAME }}
@@ -12,6 +16,7 @@ import type { MenuData } from '../custom/customType'
 
 
 const props = defineProps<{
+	menuName: string;
     menuList: MenuData[];
 }>()
 
@@ -32,6 +37,12 @@ function subMenuSelect (evt: Event): void {
 
 
 <style scoped>
+.menu-title {
+	display: block;
+	font-size: 18px;
+	text-align: center;
+	padding-bottom: 0.2rem;
+}
 .menu-item {
 	display: block;
 	color:black;

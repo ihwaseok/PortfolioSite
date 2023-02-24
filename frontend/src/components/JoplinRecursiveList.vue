@@ -1,10 +1,9 @@
 <template>
 <li v-for="(item) in props.menuList" v-bind:key="item.ID">
-    <a href="#" class="menu-item" v-on:click="getSubMenuList"  v-on:dblclick="openChildList" v-bind="{menuId: item.ID}">
+    <a href="#" class="menu-item" v-on:click="getSubMenuList"  v-on:dblclick="openChildList" v-bind="{menuId: item.ID, menuName: item.NAME}">
 		
 		<ArrowIcon class="menu-arrow" v-if="item.CHILD_MENU != undefined" v-on:click="openChildList"/>
-		{{ item.NAME }}
-		<a>({{ calculateNote(item, 0) }})</a>
+		{{ item.NAME }} ({{ calculateNote(item, 0) }})
 	</a>
 
 	<ul class="menu-item-sub list-unstyled" v-if="item.CHILD_MENU != undefined">
@@ -24,16 +23,18 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-	(e: 'getMenuId', menuId: string): void
+	(e: 'getMenuId', menuData: Partial<MenuData>): void
 }>()
 
 // 서브 메뉴 리스트 출력
 // 메뉴를 선택했을 경우 메뉴 Id를 JoplinMenu 에게 전달 (Emit)
 function getSubMenuList (evt: Event): void {
 	const el: Partial<HTMLElement> = evt!.target!;
-	let menuId: string = el.getAttribute!('menuId')!;
+	const menuId: string = el.getAttribute!('menuId')!;
+	const menuName: string = el.getAttribute!('menuName')!;
+	const menuData: Partial<MenuData> = {ID: menuId, NAME: menuName};
 
-	emit('getMenuId', menuId);
+	emit('getMenuId', menuData);
 
 	evt.preventDefault(); // 상단이동 방지
 }
@@ -64,8 +65,8 @@ function openChildList (evt: Event): void {
 }
 
 // 재귀 호출시 메뉴 Id 가져오기 (Emit-Receive)
-function getMenuId(menuId: string): void {
-	emit('getMenuId', menuId);
+function getMenuId(menuData: Partial<MenuData>): void {
+	emit('getMenuId', menuData);
 }
 
 // 하위 트리를 포함한 노트의 개수 계산

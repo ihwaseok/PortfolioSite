@@ -43,7 +43,7 @@
 					<!-- menu -->
 					<ul class="list list-unstyled mb-0">
 
-						<JoplinSubList v-bind:menuList="subMenuList" v-bind:onGetMenuPath="getMenuPath"/>
+						<JoplinSubList v-bind:menuName="menuName" v-bind:menuList="subMenuList" v-bind:onGetMenuPath="getMenuPath"/>
 
 					</ul>
 
@@ -74,6 +74,7 @@ export default {
 	data() {
 		return {
 			mainMenuList: [] as MenuData[],
+			menuName: '' as string,
 			subMenuList: [] as MenuData[]
 		};
 	},
@@ -129,8 +130,14 @@ export default {
 		},
 
 		// JoplinRecursiveList 에서 클릭한 메뉴의 Id를 받아오기 (Emit-Receive)
-		getMenuId (menuId: string): void {
-			this.getSubMenuList(menuId);
+		getMenuId (menuData: Partial<MenuData>): void {
+			const menuId: string = menuData.ID!;
+			const menuName: string = menuData.NAME!;
+
+			if (menuId != '' && menuId != null && menuId != undefined) {
+				this.getSubMenuList(menuId);
+				this.menuName = menuName;
+			}
 		},
 
 		// 받아온 메뉴 Id로 서브 메뉴 리스트 가져오기
