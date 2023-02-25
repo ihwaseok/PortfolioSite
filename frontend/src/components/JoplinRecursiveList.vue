@@ -91,6 +91,7 @@ function calculateNote (item: MenuData, count: number): number {
 	color:black;
 	padding: 0 0.625rem 0 0.4rem;
 	margin: 0;
+	margin-bottom: 0.2rem;
 	font-weight: 500;
 	text-decoration: none;
 	line-height: 1.875rem;
@@ -98,6 +99,7 @@ function calculateNote (item: MenuData, count: number): number {
 .menu-item:hover {
 	color:blue;
 }
+
 .menu-item-sub {
 	display: none;
 	margin-left: 1rem;
@@ -115,5 +117,8 @@ function calculateNote (item: MenuData, count: number): number {
 }
 .rotated {
 	transform: rotate(90deg);
+}
+.text-white {
+	color: whitesmoke;
 }
 </style>

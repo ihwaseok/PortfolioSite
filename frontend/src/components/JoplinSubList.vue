@@ -4,7 +4,7 @@
 </span>
 
 <li v-for="(item) in props.menuList" v-bind:key="item.ID">
-    <a href="#" class="menu-item" v-on:click="subMenuSelect" v-bind="{menuPath: item.PATH}">
+    <a href="#" class="menu-item" v-bind:class="{active : (selectedId == item.ID)}" v-on:click="[subMenuSelect($event), passId(item.ID)]" v-bind="{menuPath: item.PATH}">
 		{{ item.NAME }}
 	</a>
 </li>
@@ -13,7 +13,11 @@
 
 <script setup lang="ts">
 import type { MenuData } from '../custom/customType'
+import { ref } from 'vue'
+import type { Ref } from 'vue'
 
+
+let selectedId: Ref<string> = ref('');
 
 const props = defineProps<{
 	menuName: string;
@@ -33,6 +37,12 @@ function subMenuSelect (evt: Event): void {
 	emit('getMenuPath', menuPath);
 }
 
+// 메뉴 클릭 이벤트
+// 메뉴 ID를 selectedId 에게 넘겨서 class 변경
+function passId(id: string): void {
+	selectedId.value = id;
+}
+
 </script>
 
 
@@ -42,6 +52,9 @@ function subMenuSelect (evt: Event): void {
 	font-size: 18px;
 	text-align: center;
 	padding-bottom: 0.2rem;
+	border-bottom: 2px solid black;
+	background-color: #40BFFF;
+	min-height: 2rem;
 }
 .menu-item {
 	display: block;
@@ -51,5 +64,13 @@ function subMenuSelect (evt: Event): void {
 	font-weight: 500;
 	text-decoration: none;
 	line-height: 1.875rem;
+	border-bottom: 1px solid black;
+}
+.menu-item:hover {
+	color: blue;
+}
+
+.active {
+	background-color: #ACCEE5;
 }
 </style>

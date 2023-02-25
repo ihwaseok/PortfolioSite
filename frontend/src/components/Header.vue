@@ -1,27 +1,27 @@
 <template>
-<div class="sticky-top header-bg-white">
-    <header class="d-flex flex-wrap justify-content-center py-1">
+<div class="sticky-top header-bg-blue">
+    <header class="d-flex flex-wrap justify-content-center header py-1">
         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none header-logo">
-        <span class="fs-4">LSH Portpolio Site</span>
+            <span class="fs-4 text-white">LSH Portpolio Site</span>
         </a>
 
         <ul class="nav nav-pills header-nav">
-            <li class="nav-item" v-for="(item) of menuList">
-                <a href="#" class="nav-link" v-bind:id="item.id" v-bind:class="{active: (selectedId == item.id)}" v-on:click="menuSelect(item.id)">
+            <li class="nav-list">
+                <a href="#" class="btn text-white" v-for="(item) of menuList" v-bind:id="item.id" v-bind:class="{active : (selectedId == item.id)}" v-on:click="menuSelect(item.id)">
                     {{ item.name }}
                 </a>
             </li>
 
             <div class="vr mg-l-1"></div>
 
-            <li>
-                <a href="https://github.com/ihwaseok/PortpolioSite" class="nav-link pd-r">
+            <li class="nav-list">
+                <a href="https://github.com/ihwaseok/PortpolioSite" class="nav-link pd-r text-white">
                     <GithubIcon/>
                     Github
                 </a>
             </li>
-            <li>
-                <a href="#" class="nav-link" v-on:click="syncJoplin">
+            <li class="nav-list">
+                <a href="#" class="nav-link text-white" v-on:click="syncJoplin">
                     <JoplinIcon/>
                     Joplin Sync
                 </a>
@@ -67,8 +67,11 @@ function syncJoplin (): void {
 
 
 <style scoped>
-.header-bg-white {
-    background-color: #9bc3fe;
+.header-bg-blue {
+    background-color: #408FFF;
+}
+.header {
+    height: 4rem;
 }
 .header-logo {
     padding-left: 0.65rem;
@@ -81,5 +84,16 @@ function syncJoplin (): void {
 }
 .pd-r {
     padding-right: 0.3rem;
+}
+.text-white {
+    color: white;
+}
+.active {
+    background-color: #0060E5;
+    border-color: #0060E5;
+}
+.nav-list {
+    margin-top: 0.5rem;
+    margin-left: 0.8rem;
 }
 </style>

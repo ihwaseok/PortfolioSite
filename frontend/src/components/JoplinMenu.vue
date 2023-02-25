@@ -11,7 +11,7 @@
 			<div class="sidebar-menu-fixed sidebar-bg-light">
 
 				<!-- menu scrollbar -->
-				<div class="scrollbar scrollbar-use-navbar">
+				<div class="scrollbar scrollbar-use-navbar recursive-side">
 
 					<!-- menu -->
 					<ul class="list list-unstyled mb-0">
@@ -38,7 +38,7 @@
 			<div class="sidebar-menu-fixed sidebar-bg-blue">
 
 				<!-- menu scrollbar -->
-				<div class="scrollbar scrollbar-use-navbar">
+				<div class="scrollbar scrollbar-use-navbar sub-side">
 
 					<!-- menu -->
 					<ul class="list list-unstyled mb-0">
@@ -205,5 +205,13 @@ export default {
   width: 14.375rem;
   font-size: 0.875rem;
   margin-left: 0rem;
+}
+.recursive-side {
+	background-color: #ACCEE5;
+	border: 1px solid black;
+}
+.sub-side {
+	background-color: #BFE4FF;
+	border: 1px solid black
 }
 </style>
