@@ -80,7 +80,7 @@ router.get('/menu/r', function (req, res, next) {
 // Joplin Sync 동작
 // 1. joplin 하위 폴더를 탐색하며 얻은 데이터를 DB에 저장
 // 2. 탐색하면서 html 파일 내부의 리소스 경로 수정
-router.get('/csv/c', function (req, res, next) {
+router.get('/sync/r', function (req, res, next) {
     let dataList = [];
     const joplinDir = path_1.default.join(__dirname, '../../static/joplin');
     const option = {

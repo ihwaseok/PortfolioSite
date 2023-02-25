@@ -21,15 +21,15 @@
                 </a>
             </li>
             <li>
-                <a href="#" class="nav-link" v-on:click="makeCsv">
-                    <CsvIcon/>
-                    Joplin.csv
+                <a href="#" class="nav-link" v-on:click="syncJoplin">
+                    <JoplinIcon/>
+                    Joplin Sync
                 </a>
             </li>
         </ul>
     </header>
 
-    <LoadingSpinner v-bind:isLoading="isLoading"/>
+    <LoadingSpinner v-bind:isSpinning="isSpinning"/>
 </div>
 </template>
 
@@ -39,13 +39,13 @@ import axios from 'axios';
 import { ref } from 'vue'
 import type { Ref } from 'vue'
 import GithubIcon from '../assets/icon/github.vue'
-import CsvIcon from '../assets/icon/file-csv-solid.vue'
+import JoplinIcon from '../assets/icon/Joplin-icon.vue'
 import LoadingSpinner from './LoadingSpinner.vue'
 
 
 const menuList = [{id: '1', name: '공부 기록'}, {id: '2', name: '테스트'}];
 let selectedId: Ref<string> = ref('1');
-let isLoading: Ref<boolean> = ref(false);
+let isSpinning: Ref<boolean> = ref(false);
 
 // 메뉴 선택 이벤트
 function menuSelect (menuId: string): void {
@@ -53,12 +53,13 @@ function menuSelect (menuId: string): void {
 }
 
 // Joplin Sync 클릭 이벤트
-function makeCsv (): void {
-    isLoading.value = true;
+function syncJoplin (): void {
+    isSpinning.value = true;
 
-    axios.get('/joplin/csv/c')
+    axios.get('/joplin/sync/r')
         .then((res) => {
-            isLoading.value = false;
+            isSpinning.value = false;
+            window.location.reload();
         });
 }
 

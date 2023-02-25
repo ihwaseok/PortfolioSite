@@ -1,12 +1,12 @@
 <template>
-    <div class="loading-spinner" v-if="props.isLoading">
+    <div class="loading-spinner" v-if="props.isSpinning">
         <div class="spinner-border text-primary spinner" role="status"></div>
     </div>
 </template>
 
 <script setup lang="ts">
 const props = defineProps<{
-    isLoading: boolean;
+    isSpinning: boolean;
 }>()
 
 </script>
