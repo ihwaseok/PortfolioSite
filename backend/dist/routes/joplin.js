@@ -194,4 +194,17 @@ function updateResoucePath(path) {
         });
     });
 }
+// Joplin 그리드 데이터 가져오기
+router.get('/menuGrid/r', function (req, res, next) {
+    const query = `
+        SELECT ID, NAME, PARENT_ID, CATEGORY, PATH, IS_DIR, SORT_NO, CREATED_DT
+        FROM admin_menu
+        WHERE CATEGORY = 'Joplin'
+    `;
+    connection.query(query, function (err, row) {
+        if (err)
+            throw err;
+        res.send(row);
+    });
+});
 exports.default = router;

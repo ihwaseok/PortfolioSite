@@ -7,6 +7,12 @@
         <!-- page -->
         <div class="content-box" v-html="htmlText"></div>
 
+        <!-- index 그리드 -->
+        <div class="content-box" v-if="isIndex">
+            <h1>{{ indexTableTitle }}</h1>
+            <Table v-bind:header="indexHeader" v-bind:headerMatcher="indexHeader" v-bind:dataList="indexDataList" />
+        </div>
+
     </main>
 
 </div>
@@ -15,13 +21,20 @@
 
 <script setup lang="ts">
 import '../assets/panda-syntax-light.min.css'
+import Table from './Table.vue'
 import axios, { type AxiosResponse } from 'axios';
 import { ref } from 'vue';
 import type { Ref } from 'vue';
 import MarkDownIt from 'markdown-it'
 import Mermaid from 'mermaid'
 import hljs from 'highlight.js'
+import type { ADMIN_MENU } from '@/custom/customType';
 
+
+const indexTableTitle: string = 'Joplin Menu 데이터'
+const indexHeader: string[] = ['ID', 'NAME', 'PARENT_ID', 'CATEGORY', 'PATH', 'IS_DIR', 'SORT_NO', 'CREATED_DT'];
+let indexDataList: Ref<ADMIN_MENU[]> = ref([]);
+let isIndex: Ref<boolean> = ref(true);
 
 // md 파일을 html으로 변환하기 위한 객체
 const md: MarkDownIt = new MarkDownIt({
@@ -47,7 +60,15 @@ function getHtmlText (path: string) {
             .then((res: AxiosResponse) => {                
                 let html: string = md.render(res.data);
                 htmlText.value = renderMermaid(html);
+                getGridData();
             });
+    }
+    
+    if (path == '/index.md') {
+        isIndex.value = true;
+    }
+    else {
+        isIndex.value = false;
     }
 }
 
@@ -68,6 +89,15 @@ function renderMermaid (html: string): string {
 
     return html;
 } 
+
+// 초기 화면 그리드 데이터 가져오기
+function getGridData (): void {
+    axios.get('/joplin/menuGrid/r')
+        .then((res: AxiosResponse) => {                
+            const dataList: ADMIN_MENU[] = res.data;
+            indexDataList.value = dataList;
+        });
+}
 
 // Init
 const index: string = '/index.md';
