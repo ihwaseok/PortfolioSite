@@ -1,1 +1,47 @@
-<!-- --- --><!-- title: 문서 구조 --><!-- updated: 2023-01-06 07:42:13Z --><!-- created: 2022-12-31 08:31:12Z --><!-- latitude: 37.44491680 --><!-- longitude: 127.13886840 --><!-- altitude: 0.0000 --><!-- --- -->## Window- 자바스크립트의 최상위 객체이자 전역 객체 이면서 모든 객체가 소속된 객체  → 최상위에 있기 때문에 어디서든 접근이 가능- 브라우저의 윈도우 창을 의미한다<img src="/joplinRes/_resources/2dfc7656c86d93d685b4a285fb877c75.png" width="500"/>## DOM (Document Object Model)- 객체지향 모델로써 구조화된 문서를 표현하는 형식  → 브라우저가 웹 문서를 이해할 수 있도록 구성한 것  → 모든 요소들과의 관계를 부자 관계로 표현 가능한 트리 구조- 자바스크립트를 통해 동적으로 변경 가능```mermaidflowchart TD	Document --> html	html --> head	html --> body	head --> title	title --> text1[''DOM Tutorial'']	body --> h1	body --> table	h1 --> text2[''DOM Lesson 1'']	h1 --> id1[id=''test'']	table --> td1[td]	table --> td2[td]	table --> td3[td]	td1 --> text3[''John'']	td2 --> text4[''Til'']	td3 --> text5[''Army'']``````xml<!DOCTYPE html><html>	<head>		<title>DOM Tutorial</title>	</head>	<body>		<h1 id="test">DOM Lesson 1</h1>		<table>			<td>John</td>			<td>Til</td>			<td>Army</td>		</table>	</body></html>```|이름|설명||--|--||문서노드| 트리의 최상위||요소노드| 태그||어트리뷰트 노드| 태그안의 속성||텍스트 노드| 태그 내부의 텍스트 표현|<br>## BOM (Browser Object Model)- 자바스크립트가 브라우저와 소통하기 위해 만들어진 모델- 공식 표준은 아니지만 대부분의 브라우저가 비슷한 메소드와 속성으로 동작한다|이름|설명||--|--||navigator | 브라우저명과 버전정보를 속성으로 가진다     ||window    | 최상위 객체로, 각 프레임별로 하나씩 존재한다 ||document  |  현재 문서에 대한 정보              ||location  |  현재 URL에 대한 정보             ||history   |   현재의 브라우저가 접근했던 URL 히스토리 ||screen    |  브라우저의 외부 환경에 대한 정보를 제공   |
+
+## 노트 웹사이트
+- 노트 프로그램 `Joplin`으로 정리한 기록을 웹으로 공유하기 위한 사이트 제작
+- [깃허브 주소](https://github.com/ihwaseok/PortpolioSite)
+<br>
+
+## 필요사항
+- `.MD` 파일을 사이드바 메뉴를 통해 출력
+- 출력시 마크다운 기술을 지원해야 한다 (코드블럭, 다이어그램)
+- 노트기록 외에도 포트폴리오로 다른 웹 기능을 보이기 위한 확장성 고려
+- 웹사이트의 기본적인 기능을 시작부터 끝까지 전부 제작
+- 실제 서버에서 독립적으로 호스팅 가능하도록 웹사이트 전체 구현
+<br>
+
+## 기술상세
+
+|이름|내용|
+|--|--|
+|Language|Typescript, Javascript|
+|Front End|Vue.js, Bootstrap, Vite|
+|Back End|Node.js, Express.js|
+|Data Base|MySql|
+|etc|Git, VS Code|
+
+<br>
+
+## 상단 메뉴 기능
+1. 로고 클릭시 초기 `index` 페이지로 복귀
+2. 깃허브 주소 링크
+3. Joplin Sync 기능
+	- 현재 로컬파일 경로와 동일해 지도록 DB의 메뉴 데이터를 삭제 하고 삽입 (간편한 노트 최신화)
+	- 작업중 로딩 스피너 출력
+	- 작업 완료후 `index` 페이지 하단의 테이블에 데이터 출력
+
+<br>
+
+## 사이드 메뉴 기능
+1. 메인 메뉴와 서브 메뉴의 이중 구성
+2. 메인 메뉴
+	- 클릭시 해당 메뉴에 종속된 서브 메뉴 리스트 출력
+	- 더블클릭, 화살표 클릭시 메인 메뉴에서 자식 메뉴들이 활성화되어 출력
+	- 메인 메뉴는 깊이 제한 없이 구성 가능
+3. 서브 메뉴
+	- 메인 메뉴에 종속된 페이지 리스트를 출력
+	- 클릭시 해당 페이지를 출력
+
+<br>
