@@ -8,7 +8,6 @@ import mysql from 'mysql';
 
 // 페이지 라우터 등록
 import indexRouter from './routes/index';
-import usersRouter from './routes/users';
 import joplinRouter from './routes/joplin';
 
 // express 애플리케이션 생성
@@ -45,7 +44,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // frontend의 REST API 연결
 app.use('/', indexRouter);
-app.use('/api/users', usersRouter);
 app.use('/joplin', joplinRouter);
 
 // 리소스 경로 설정

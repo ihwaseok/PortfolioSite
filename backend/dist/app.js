@@ -12,7 +12,6 @@ const morgan_1 = __importDefault(require("morgan"));
 const mysql_1 = __importDefault(require("mysql"));
 // 페이지 라우터 등록
 const index_1 = __importDefault(require("./routes/index"));
-const users_1 = __importDefault(require("./routes/users"));
 const joplin_1 = __importDefault(require("./routes/joplin"));
 // express 애플리케이션 생성
 const app = (0, express_1.default)();
@@ -43,7 +42,6 @@ app.use((0, cookie_parser_1.default)());
 app.use(express_1.default.static(path_1.default.join(__dirname, 'public')));
 // frontend의 REST API 연결
 app.use('/', index_1.default);
-app.use('/api/users', users_1.default);
 app.use('/joplin', joplin_1.default);
 // 리소스 경로 설정
 app.use('/joplinRes', express_1.default.static(path_1.default.join(__dirname, '../static/joplin')));
