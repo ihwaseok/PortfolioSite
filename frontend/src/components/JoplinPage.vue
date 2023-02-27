@@ -22,7 +22,7 @@
 <script setup lang="ts">
 import '../assets/panda-syntax-light.min.css'
 import Table from './Table.vue'
-import axios, { type AxiosResponse } from 'axios';
+import axios, { AxiosError, type AxiosResponse } from 'axios';
 import { ref } from 'vue';
 import type { Ref } from 'vue';
 import MarkDownIt from 'markdown-it'
@@ -57,10 +57,13 @@ let htmlText: Ref<string> = ref('');
 function getHtmlText (path: string) {
     if (path != null && path != undefined) {
         axios.get('/joplin/page/r', {params: {pagePath: path}})
-            .then((res: AxiosResponse) => {                
+            .then((res: AxiosResponse) => {
                 let html: string = md.render(res.data);
                 htmlText.value = renderMermaid(html);
                 getGridData();
+            })
+            .catch((error: AxiosError) => {
+                alert('에러 발생');
             });
     }
     
@@ -96,7 +99,11 @@ function getGridData (): void {
         .then((res: AxiosResponse) => {                
             const dataList: ADMIN_MENU[] = res.data;
             indexDataList.value = dataList;
+        })
+        .catch((error: AxiosError) => {
+            alert('에러 발생');
         });
+        
 }
 
 // Init

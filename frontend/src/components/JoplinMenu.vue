@@ -60,7 +60,7 @@
 
 
 <script lang="ts">
-import axios, { type AxiosResponse } from 'axios';
+import axios, { type AxiosResponse, AxiosError } from 'axios';
 import JoplinRecursiveList from './JoplinRecursiveList.vue';
 import JoplinSubList from './JoplinSubList.vue';
 import type { MenuData } from '../custom/customType'
@@ -87,6 +87,9 @@ export default {
 			axios.get('/joplin/menu/r', {params: {id: 'all'}})
 				.then((res: AxiosResponse) => {
 					this.mainMenuList = this.convertMainMenuData(res.data);
+				})
+				.catch((error: AxiosError) => {
+					alert('에러 발생');
 				});
 		},
 

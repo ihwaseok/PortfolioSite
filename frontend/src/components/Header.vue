@@ -36,6 +36,7 @@
 
 <script setup lang="ts">
 import axios from 'axios';
+import type { AxiosResponse, AxiosError } from 'axios';
 import { ref } from 'vue'
 import type { Ref } from 'vue'
 import GithubIcon from '../assets/icon/github.vue'
@@ -57,9 +58,12 @@ function syncJoplin (): void {
     isSpinning.value = true;
 
     axios.get('/joplin/sync/r')
-        .then((res) => {
+        .then((res: AxiosResponse) => {
             isSpinning.value = false;
             window.location.reload();
+        })
+        .catch((error: AxiosError) => {
+            alert('에러 발생');
         });
 }
 

@@ -40,7 +40,11 @@ router.get('/page/r', function(req:Request, res:Response, next:NextFunction) {
     const readPath: string = path.join(__dirname, '../../static/joplin' + pagePath);
     
     res.sendFile(readPath, (err) => {
-        if (err) throw err;
+        if (err) {
+            res.send(err);
+            console.log('routes/joplin.ts : Html 파일 로드 에러');
+            console.error(err);
+        }
     });
 });
 
@@ -52,7 +56,11 @@ router.get('/menu/r', function(req: Request, res: Response, next: NextFunction) 
         const query: string = mybatisMapper.getStatement('joplinMapper', 'getMenuAll', undefined, queryFormat);
         
         connection.query(query, function (err:Error, row:object[]) {
-            if (err) throw err;
+            if (err) {
+                console.log('routes/joplin.ts : 전체 데이터 쿼리 에러');
+                console.error(err);
+            }
+
             res.send(row);
         });
     }
@@ -61,7 +69,10 @@ router.get('/menu/r', function(req: Request, res: Response, next: NextFunction) 
         const query: string = mybatisMapper.getStatement('joplinMapper', 'getMenuById', param, queryFormat);
         
         connection.query(query, function (err:Error, row:object[]) {
-            if (err) throw err;
+            if (err) {
+                console.log('routes/joplin.ts : 개별 데이터 쿼리 에러');
+                console.error(err);
+            }
             res.send(row);
         });
     }
@@ -85,7 +96,10 @@ router.get('/sync/r', function(req: Request, res: Response, next: NextFunction) 
     // 삽입전 테이블 데이터 삭제
     const deleteQuery: string = 'TRUNCATE TABLE admin_menu';
     connection.query(deleteQuery, function (err) {
-        if (err) throw err;
+        if (err) {
+            console.log('routes/joplin.ts : 테이블 삭제 쿼리 에러');
+            console.error(err);
+        }
 
         console.log('Joplin Sync Menu Table Truncated');
     });
@@ -99,7 +113,10 @@ router.get('/sync/r', function(req: Request, res: Response, next: NextFunction) 
     }
 
     connection.query(insertQuery, [values], function (err: Error | null, result: OkPacket): void {
-        if (err) throw err;
+        if (err) {
+            console.log('routes/joplin.ts : 데이터 삽입 쿼리 에러');
+            console.error(err);
+        }
 
         console.log('Joplin Sync Menu Data Inserted: ' + result.affectedRows);
     });
@@ -207,7 +224,10 @@ function updateResoucePath (path: string): void {
     // 파일 전부 읽은 뒤 이벤트
     lineEvent.on('close', () => {
         fs.writeFile(path, Buffer.concat(updatedHtml).toString(), (err) => {
-            if (err) throw err;
+            if (err) {
+                console.log('routes/joplin.ts : 리소스 경로 수정 파일 다시쓰기 에러');
+                console.error(err);
+            }
         })
     });
 }
@@ -217,7 +237,11 @@ router.get('/menuGrid/r', function(req: Request, res: Response, next: NextFuncti
     const query = mybatisMapper.getStatement('joplinMapper', 'getMenuGrid', undefined, queryFormat);
 
     connection.query(query, function (err:Error, row:object[]) {
-        if (err) throw err;
+        if (err) {
+            console.log('routes/joplin.ts : index 그리드 데이터 쿼리 에러');
+            console.error(err);
+        }
+
         res.send(row);
     });
     
