@@ -7,8 +7,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // 모듈 가져오기
 const app_1 = __importDefault(require("../app"));
 const http_1 = __importDefault(require("http"));
-//var debug = require('debug')('portpoliosite:server');
 const debug_1 = __importDefault(require("debug"));
+// 디버거 설정
 const debug = (0, debug_1.default)('portpoliosite:server');
 // 포트 설정
 const port = normalizePort(process.env.PORT || '3000');

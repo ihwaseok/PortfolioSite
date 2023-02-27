@@ -1,17 +1,17 @@
-import { createApp } from 'vue';
-import axios from 'axios';
+import { createApp, type App } from 'vue';
+import Axios from 'axios';
 import VueAxios from 'vue-axios';
+
+import AppComponent from './App.vue';
+import Router from './router';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap';
 
-import App from './App.vue';
-import router from './router';
 
+const app: App<Element> = createApp(AppComponent);
 
-const app = createApp(App);
-
-app.use(router);
-app.use(VueAxios, axios);
+app.use(Router);
+app.use(VueAxios, Axios);
 
 app.mount('#app');

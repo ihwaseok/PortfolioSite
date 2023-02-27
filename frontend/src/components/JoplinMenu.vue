@@ -60,10 +60,10 @@
 
 
 <script lang="ts">
-import axios, { type AxiosResponse, AxiosError } from 'axios';
+import Axios, { type AxiosResponse, AxiosError } from 'axios';
+import type { MenuData } from '../custom/customType';
 import JoplinRecursiveList from './JoplinRecursiveList.vue';
 import JoplinSubList from './JoplinSubList.vue';
-import type { MenuData } from '../custom/customType'
 
 
 export default {
@@ -84,7 +84,7 @@ export default {
 	methods: {
 		// DB로 부터 메뉴 리스트 가져오기
 		getMenuList (): void {
-			axios.get('/joplin/menu/r', {params: {id: 'all'}})
+			Axios.get('/joplin/menu/r', {params: {id: 'all'}})
 				.then((res: AxiosResponse) => {
 					this.mainMenuList = this.convertMainMenuData(res.data);
 				})
@@ -144,9 +144,9 @@ export default {
 		},
 
 		// 받아온 메뉴 Id로 서브 메뉴 리스트 가져오기
-		getSubMenuList (menuId: string) {
+		getSubMenuList (menuId: string): void {
 			if (menuId != null && menuId != undefined) {
-				axios.get('/joplin/menu/r', {params: {id: menuId}})
+				Axios.get('/joplin/menu/r', {params: {id: menuId}})
 					.then((res: AxiosResponse) => {
 						this.subMenuList = res.data;
 					});

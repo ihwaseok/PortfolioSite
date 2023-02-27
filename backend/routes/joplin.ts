@@ -1,17 +1,17 @@
-import express, { Request, Response, NextFunction } from 'express';
-import mysql, { Connection, MysqlError, OkPacket } from 'mysql';
-import mybatisMapper from 'mybatis-mapper';
-import path from 'path';
-import fs, { read, WriteStream } from 'fs'
-import rl from 'readline'
-import type { ADMIN_MENU } from '../custom/customType'
+import Express, { Router, Request, Response, NextFunction } from 'express';
+import Mysql, { Connection, MysqlError, OkPacket } from 'mysql';
+import MybatisMapper from 'mybatis-mapper';
+import Path from 'path';
+import Fs from 'fs';
+import Rl from 'readline';
+import type { ADMIN_MENU } from '../custom/customType';
 
 
 // 라우터 객체 생성
-const router = express.Router();
+const router: Router = Express.Router();
 
 // 커넥션 생성
-const connection:Connection = mysql.createConnection({
+const connection: Connection = Mysql.createConnection({
     host: 'localhost',
     port: 3306,
     user: 'root',
@@ -29,17 +29,17 @@ connection.connect(function (err:MysqlError) {
 });
 
 // myBatis xml파일 매핑
-mybatisMapper.createMapper([path.join(__dirname, '../../query/joplin.xml')]);
+MybatisMapper.createMapper([Path.join(__dirname, '../../query/joplin.xml')]);
 
 // myBatis format 설정
-const queryFormat: mybatisMapper.Format = { language: 'sql', indent: ' '};
+const queryFormat: MybatisMapper.Format = { language: 'sql', indent: ' '};
 
 // Html 파일 가져오기
-router.get('/page/r', function(req:Request, res:Response, next:NextFunction) {
-    const pagePath = req.query.pagePath?.toString();
-    const readPath: string = path.join(__dirname, '../../static/joplin' + pagePath);
+router.get('/page/r', function(req: Request, res: Response, next: NextFunction) {
+    const pagePath: string = req.query.pagePath!.toString();
+    const readPath: string = Path.join(__dirname, '../../static/joplin' + pagePath);
     
-    res.sendFile(readPath, (err) => {
+    res.sendFile(readPath, (err: Error) => {
         if (err) {
             res.send(err);
             console.log('routes/joplin.ts : Html 파일 로드 에러');
@@ -50,12 +50,12 @@ router.get('/page/r', function(req:Request, res:Response, next:NextFunction) {
 
 // 메뉴 데이터 가져오기
 router.get('/menu/r', function(req: Request, res: Response, next: NextFunction) {
-    const id = req.query.id?.toString();
+    const id: string = req.query.id!.toString();
 
     if (id == 'all') {
-        const query: string = mybatisMapper.getStatement('joplinMapper', 'getMenuAll', undefined, queryFormat);
+        const query: string = MybatisMapper.getStatement('joplinMapper', 'getMenuAll', undefined, queryFormat);
         
-        connection.query(query, function (err:Error, row:object[]) {
+        connection.query(query, function (err: Error, row: object[]) {
             if (err) {
                 console.log('routes/joplin.ts : 전체 데이터 쿼리 에러');
                 console.error(err);
@@ -65,10 +65,10 @@ router.get('/menu/r', function(req: Request, res: Response, next: NextFunction) 
         });
     }
     else {
-        const param: mybatisMapper.Params = { id: id };
-        const query: string = mybatisMapper.getStatement('joplinMapper', 'getMenuById', param, queryFormat);
+        const param: MybatisMapper.Params = { id : id };
+        const query: string = MybatisMapper.getStatement('joplinMapper', 'getMenuById', param, queryFormat);
         
-        connection.query(query, function (err:Error, row:object[]) {
+        connection.query(query, function (err: Error, row: object[]) {
             if (err) {
                 console.log('routes/joplin.ts : 개별 데이터 쿼리 에러');
                 console.error(err);
@@ -83,7 +83,7 @@ router.get('/menu/r', function(req: Request, res: Response, next: NextFunction) 
 // 2. 탐색하면서 html 파일 내부의 리소스 경로 수정
 router.get('/sync/r', function(req: Request, res: Response, next: NextFunction) {
     let dataList: ADMIN_MENU[] = [];
-    const joplinDir = path.join(__dirname, '../../static/joplin');
+    const joplinDir: string = Path.join(__dirname, '../../static/joplin');
     const option: recursiveOption = {
         exceptList : ['_resources', 'pluginAssets', 'index.md'],
         parentId : '',
@@ -95,7 +95,7 @@ router.get('/sync/r', function(req: Request, res: Response, next: NextFunction) 
 
     // 삽입전 테이블 데이터 삭제
     const deleteQuery: string = 'TRUNCATE TABLE admin_menu';
-    connection.query(deleteQuery, function (err) {
+    connection.query(deleteQuery, function (err: Error) {
         if (err) {
             console.log('routes/joplin.ts : 테이블 삭제 쿼리 에러');
             console.error(err);
@@ -126,7 +126,7 @@ router.get('/sync/r', function(req: Request, res: Response, next: NextFunction) 
 
 // 하위 폴더를 재귀적으로 탐색 (Joplin Sync)
 function searchRecursive (dirPath: string, result: ADMIN_MENU[], option: recursiveOption): void {
-    const childList = fs.readdirSync(dirPath);
+    const childList = Fs.readdirSync(dirPath);
     let sortNo: number = 0;
 
     for (const child of childList) {
@@ -181,8 +181,8 @@ type recursiveOption = {
 // Html 파일의 리소스 경로 수정 (Joplin Sync)
 function updateResoucePath (path: string): void {
     const resPath: string = '/joplinRes';
-    const reader = fs.createReadStream(path);
-    const lineEvent = rl.createInterface(reader);
+    const reader: Fs.ReadStream = Fs.createReadStream(path);
+    const lineEvent: Rl.Interface = Rl.createInterface(reader);
     let updatedHtml: Uint8Array[] = [];
     let metaChk: number = 0;
     
@@ -223,7 +223,7 @@ function updateResoucePath (path: string): void {
 
     // 파일 전부 읽은 뒤 이벤트
     lineEvent.on('close', () => {
-        fs.writeFile(path, Buffer.concat(updatedHtml).toString(), (err) => {
+        Fs.writeFile(path, Buffer.concat(updatedHtml).toString(), (err: NodeJS.ErrnoException | null) => {
             if (err) {
                 console.log('routes/joplin.ts : 리소스 경로 수정 파일 다시쓰기 에러');
                 console.error(err);
@@ -234,9 +234,9 @@ function updateResoucePath (path: string): void {
 
 // Joplin 그리드 데이터 가져오기
 router.get('/menuGrid/r', function(req: Request, res: Response, next: NextFunction) {
-    const query = mybatisMapper.getStatement('joplinMapper', 'getMenuGrid', undefined, queryFormat);
+    const query = MybatisMapper.getStatement('joplinMapper', 'getMenuGrid', undefined, queryFormat);
 
-    connection.query(query, function (err:Error, row:object[]) {
+    connection.query(query, function (err: Error, row: object[]): void {
         if (err) {
             console.log('routes/joplin.ts : index 그리드 데이터 쿼리 에러');
             console.error(err);
@@ -244,7 +244,6 @@ router.get('/menuGrid/r', function(req: Request, res: Response, next: NextFuncti
 
         res.send(row);
     });
-    
 });
 
 export default router;

@@ -10,8 +10,7 @@
 
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import type { Ref } from 'vue'
+import { ref, type Ref } from 'vue';
 import Header from './components/Header.vue';
 import JoplinMenu from './components/JoplinMenu.vue';
 import JoplinPage from './components/JoplinPage.vue';

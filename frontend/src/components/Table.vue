@@ -13,8 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Ref } from 'vue'
-import { ref, watch } from 'vue'
+import { ref, watch, type Ref } from 'vue';
 
 
 const props = defineProps<{

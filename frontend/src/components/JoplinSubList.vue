@@ -12,9 +12,8 @@
 
 
 <script setup lang="ts">
-import type { MenuData } from '../custom/customType'
-import { ref } from 'vue'
-import type { Ref } from 'vue'
+import { ref, type Ref } from 'vue';
+import type { MenuData } from '../custom/customType';
 
 
 let selectedId: Ref<string> = ref('');

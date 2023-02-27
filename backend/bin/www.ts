@@ -1,20 +1,21 @@
 #!/usr/bin/env node
 
 // 모듈 가져오기
-import app from '../app';
-import http from 'http';
-
-//var debug = require('debug')('portpoliosite:server');
+import App from '../app';
+import Http from 'http';
 import Debug from 'debug';
 import { HttpError } from 'http-errors';
-const debug = Debug('portpoliosite:server');
+import { AddressInfo } from 'net';
+
+// 디버거 설정
+const debug: Debug.Debugger = Debug('portpoliosite:server');
 
 // 포트 설정
-const port = normalizePort(process.env.PORT || '3000');
-app.set('port', port);
+const port: number | string | boolean = normalizePort(process.env.PORT || '3000');
+App.set('port', port);
 
 // HTTP 서버 생성
-const server = http.createServer(app);
+const server: Http.Server = Http.createServer(App);
 
 // Listen on provided port, on all network interfaces.
 server.listen(port);
@@ -39,12 +40,12 @@ function normalizePort(val: string): string | number | boolean {
 }
 
 // HTTP 서버 에러 이벤트를 위한 리스너
-function onError(error:HttpError):void {
+function onError(error: HttpError): void {
   if (error.syscall !== 'listen') {
     throw error;
   }
 
-  const bind = typeof port === 'string'
+  const bind: string = typeof port === 'string'
     ? 'Pipe ' + port
     : 'Port ' + port;
 
@@ -54,23 +55,26 @@ function onError(error:HttpError):void {
       console.error(bind + ' requires elevated privileges');
       process.exit(1);
       break;
+
     case 'EADDRINUSE':
       console.error(bind + ' is already in use');
       process.exit(1);
       break;
+
     default:
       throw error;
   }
 }
 
 // Event listener for HTTP server "listening" event.
-function onListening() {
-  let addr = server.address();
+function onListening(): void {
+  let addr: string | AddressInfo | null = server.address();
+  
   if (addr === null) {
     addr = 'null';
   }
 
-  const bind = typeof addr === 'string'
+  const bind: string = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
 

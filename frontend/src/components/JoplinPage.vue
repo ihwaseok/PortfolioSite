@@ -20,18 +20,17 @@
 
 
 <script setup lang="ts">
-import '../assets/panda-syntax-light.min.css'
-import Table from './Table.vue'
-import axios, { AxiosError, type AxiosResponse } from 'axios';
-import { ref } from 'vue';
-import type { Ref } from 'vue';
-import MarkDownIt from 'markdown-it'
-import Mermaid from 'mermaid'
-import hljs from 'highlight.js'
+import Axios, { AxiosError, type AxiosResponse } from 'axios';
+import { ref, type Ref } from 'vue';
+import MarkDownIt from 'markdown-it';
+import Mermaid from 'mermaid';
+import Hljs from 'highlight.js';
 import type { ADMIN_MENU } from '@/custom/customType';
+import Table from './Table.vue';
+import '../assets/panda-syntax-light.min.css';
 
 
-const indexTableTitle: string = 'Joplin Menu 데이터'
+const indexTableTitle: string = 'Joplin Menu 데이터';
 const indexHeader: string[] = ['ID', 'NAME', 'PARENT_ID', 'CATEGORY', 'PATH', 'IS_DIR', 'SORT_NO', 'CREATED_DT'];
 let indexDataList: Ref<ADMIN_MENU[]> = ref([]);
 let isIndex: Ref<boolean> = ref(true);
@@ -41,10 +40,10 @@ const md: MarkDownIt = new MarkDownIt({
     html: true,
     xhtmlOut: true,
     breaks: true,
-    highlight: function (str: string, lang: string) {
-        if (lang && hljs.getLanguage(lang)) {
+    highlight: function (str: string, lang: string): string {
+        if (lang && Hljs.getLanguage(lang)) {
             try {
-                return '<pre class="hljs" code="' + lang + '"><code>' + hljs.highlight(str, { language: lang, ignoreIllegals: true }).value + '</code></pre>';
+                return '<pre class="hljs" code="' + lang + '"><code>' + Hljs.highlight(str, { language: lang, ignoreIllegals: true }).value + '</code></pre>';
             } catch (__) {}
         }
 
@@ -54,9 +53,9 @@ const md: MarkDownIt = new MarkDownIt({
 let htmlText: Ref<string> = ref('');
 
 // 메뉴 path에 있는 md 파일의 내용을 가져오기
-function getHtmlText (path: string) {
+function getHtmlText (path: string): void {
     if (path != null && path != undefined) {
-        axios.get('/joplin/page/r', {params: {pagePath: path}})
+        Axios.get('/joplin/page/r', {params: {pagePath: path}})
             .then((res: AxiosResponse) => {
                 let html: string = md.render(res.data);
                 htmlText.value = renderMermaid(html);
@@ -80,11 +79,11 @@ function getHtmlText (path: string) {
 function renderMermaid (html: string): string {
     // <pre class="hljs" code="mermaid"><code> ~ </code></pre> 사이의 데이터 가져오기 위한 정규 표현식
     const reg: RegExp = /(?<=\<pre class="hljs" code="mermaid"\>\<code\>)(.*?)(?=\<\/code\>\<\/pre\>)/gs;
-    const mermaidList = html.match(reg);
+    const mermaidList: RegExpMatchArray | null = html.match(reg);
     
     if (mermaidList != null) {
         for (let item of mermaidList) {
-            const beforeHtml = item.replace(/&gt;/gs, '>');
+            const beforeHtml: string = item.replace(/&gt;/gs, '>');
             const svg: string = Mermaid.render('mermaid', beforeHtml);
             html = html.replace(item, svg);
         }
@@ -95,7 +94,7 @@ function renderMermaid (html: string): string {
 
 // 초기 화면 그리드 데이터 가져오기
 function getGridData (): void {
-    axios.get('/joplin/menuGrid/r')
+    Axios.get('/joplin/menuGrid/r')
         .then((res: AxiosResponse) => {                
             const dataList: ADMIN_MENU[] = res.data;
             indexDataList.value = dataList;

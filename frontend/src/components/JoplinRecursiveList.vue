@@ -14,8 +14,8 @@
 
 
 <script setup lang="ts">
-import type { MenuData } from '../custom/customType'
-import ArrowIcon from '../assets/icon/angle-right-solid.vue'
+import type { MenuData } from '../custom/customType';
+import ArrowIcon from '../assets/icon/angle-right-solid.vue';
 
 
 const props = defineProps<{

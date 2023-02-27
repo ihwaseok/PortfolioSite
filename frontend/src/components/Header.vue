@@ -35,16 +35,18 @@
 
 
 <script setup lang="ts">
-import axios from 'axios';
-import type { AxiosResponse, AxiosError } from 'axios';
-import { ref } from 'vue'
-import type { Ref } from 'vue'
-import GithubIcon from '../assets/icon/github.vue'
-import JoplinIcon from '../assets/icon/Joplin-icon.vue'
-import LoadingSpinner from './LoadingSpinner.vue'
+import Axios, { type AxiosResponse, type AxiosError } from 'axios';
+import { ref, type Ref } from 'vue';
+import GithubIcon from '../assets/icon/github.vue';
+import JoplinIcon from '../assets/icon/Joplin-icon.vue';
+import LoadingSpinner from './LoadingSpinner.vue';
 
 
-const menuList = [{id: '1', name: '공부 기록'}, {id: '2', name: '테스트'}];
+type topMenuData = {
+    id: string,
+    name: string
+};
+const menuList: topMenuData[] = [{id: '1', name: '공부 기록'}, {id: '2', name: '테스트'}];
 let selectedId: Ref<string> = ref('1');
 let isSpinning: Ref<boolean> = ref(false);
 
@@ -57,7 +59,7 @@ function menuSelect (menuId: string): void {
 function syncJoplin (): void {
     isSpinning.value = true;
 
-    axios.get('/joplin/sync/r')
+    Axios.get('/joplin/sync/r')
         .then((res: AxiosResponse) => {
             isSpinning.value = false;
             window.location.reload();

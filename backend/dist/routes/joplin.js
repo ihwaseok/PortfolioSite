@@ -33,8 +33,7 @@ mybatis_mapper_1.default.createMapper([path_1.default.join(__dirname, '../../que
 const queryFormat = { language: 'sql', indent: ' ' };
 // Html 파일 가져오기
 router.get('/page/r', function (req, res, next) {
-    var _a;
-    const pagePath = (_a = req.query.pagePath) === null || _a === void 0 ? void 0 : _a.toString();
+    const pagePath = req.query.pagePath.toString();
     const readPath = path_1.default.join(__dirname, '../../static/joplin' + pagePath);
     res.sendFile(readPath, (err) => {
         if (err) {
@@ -46,8 +45,7 @@ router.get('/page/r', function (req, res, next) {
 });
 // 메뉴 데이터 가져오기
 router.get('/menu/r', function (req, res, next) {
-    var _a;
-    const id = (_a = req.query.id) === null || _a === void 0 ? void 0 : _a.toString();
+    const id = req.query.id.toString();
     if (id == 'all') {
         const query = mybatis_mapper_1.default.getStatement('joplinMapper', 'getMenuAll', undefined, queryFormat);
         connection.query(query, function (err, row) {

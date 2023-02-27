@@ -1,10 +1,12 @@
-import express, { Express, Request, Response, NextFunction} from 'express';
-import path from 'path';
-const router = express.Router(); // 라우터 객체 생성
+import Express, { Router, Request, Response, NextFunction } from 'express';
+import Path from 'path';
+
+// 라우터 객체 생성
+const router: Router = Express.Router();
 
 /* GET home page. */
 router.get('/', function(req: Request, res: Response, next: NextFunction) {
-  res.sendFile(path.join(__dirname, '../public/index.html'));
+  res.sendFile(Path.join(__dirname, '../public/index.html'));
 });
 
 export default router;
