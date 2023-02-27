@@ -1,5 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
 import mysql, { Connection, MysqlError, OkPacket } from 'mysql';
+import mybatisMapper from 'mybatis-mapper';
 import path from 'path';
 import fs, { read, WriteStream } from 'fs'
 import rl from 'readline'
@@ -27,6 +28,12 @@ connection.connect(function (err:MysqlError) {
     }
 });
 
+// myBatis xml파일 매핑
+mybatisMapper.createMapper([path.join(__dirname, '../../query/joplin.xml')]);
+
+// myBatis format 설정
+const queryFormat: mybatisMapper.Format = { language: 'sql', indent: ' '};
+
 // Html 파일 가져오기
 router.get('/page/r', function(req:Request, res:Response, next:NextFunction) {
     const pagePath = req.query.pagePath?.toString();
@@ -42,36 +49,17 @@ router.get('/menu/r', function(req: Request, res: Response, next: NextFunction) 
     const id = req.query.id?.toString();
 
     if (id == 'all') {
-        const query = `
-            SELECT A.ID, A.NAME, A.PARENT_ID, A.PATH, A.SORT_NO, A.IS_DIR
-                    , GROUP_CONCAT(B.ID ORDER BY B.SORT_NO) AS CHILD_MENU_ID
-                    , COUNT(DISTINCT C.ID) AS SUB_CNT
-            FROM admin_menu A
-            LEFT OUTER JOIN admin_menu B
-                ON A.ID = B.PARENT_ID
-                AND B.IS_DIR = 'Y'
-            LEFT OUTER JOIN admin_menu C
-                ON A.ID = C.PARENT_ID
-                AND C.IS_DIR = 'N'
-            WHERE A.IS_DIR = 'Y'
-            GROUP BY A.ID, A.NAME, A.PARENT_ID, A.PATH, A.SORT_NO, A.IS_DIR
-            ORDER BY A.ID
-        `;
-
+        const query: string = mybatisMapper.getStatement('joplinMapper', 'getMenuAll', undefined, queryFormat);
+        
         connection.query(query, function (err:Error, row:object[]) {
             if (err) throw err;
             res.send(row);
         });
     }
     else {
-        const query = `
-            SELECT A.ID, A.NAME, A.PARENT_ID, A.PATH, A.SORT_NO, A.IS_DIR
-            FROM admin_menu A
-            WHERE A.PARENT_ID = '${id}'
-            AND A.IS_DIR = 'N'
-            ORDER BY A.ID
-        `;
-
+        const param: mybatisMapper.Params = { id: id };
+        const query: string = mybatisMapper.getStatement('joplinMapper', 'getMenuById', param, queryFormat);
+        
         connection.query(query, function (err:Error, row:object[]) {
             if (err) throw err;
             res.send(row);
@@ -226,11 +214,7 @@ function updateResoucePath (path: string): void {
 
 // Joplin 그리드 데이터 가져오기
 router.get('/menuGrid/r', function(req: Request, res: Response, next: NextFunction) {
-    const query = `
-        SELECT ID, NAME, PARENT_ID, CATEGORY, PATH, IS_DIR, SORT_NO, CREATED_DT
-        FROM admin_menu
-        WHERE CATEGORY = 'Joplin'
-    `;
+    const query = mybatisMapper.getStatement('joplinMapper', 'getMenuGrid', undefined, queryFormat);
 
     connection.query(query, function (err:Error, row:object[]) {
         if (err) throw err;

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="joplinMapper">
+
+<select id="getMenuAll">
+    SELECT A.ID, A.NAME, A.PARENT_ID, A.PATH, A.SORT_NO, A.IS_DIR
+            , GROUP_CONCAT(B.ID ORDER BY B.SORT_NO) AS CHILD_MENU_ID
+            , COUNT(DISTINCT C.ID) AS SUB_CNT
+    FROM admin_menu A
+    LEFT OUTER JOIN admin_menu B
+        ON A.ID = B.PARENT_ID
+        AND B.IS_DIR = 'Y'
+    LEFT OUTER JOIN admin_menu C
+        ON A.ID = C.PARENT_ID
+        AND C.IS_DIR = 'N'
+    WHERE A.IS_DIR = 'Y'
+    GROUP BY A.ID, A.NAME, A.PARENT_ID, A.PATH, A.SORT_NO, A.IS_DIR
+    ORDER BY A.ID
+</select>
+
+<select id="getMenuById">
+    SELECT A.ID, A.NAME, A.PARENT_ID, A.PATH, A.SORT_NO, A.IS_DIR
+    FROM admin_menu A
+    WHERE A.PARENT_ID = #{id}
+    AND A.IS_DIR = 'N'
+    ORDER BY A.ID
+</select>
+
+<select id="getMenuGrid">
+    SELECT ID, NAME, PARENT_ID, CATEGORY, PATH, IS_DIR, SORT_NO, CREATED_DT
+    FROM admin_menu
+    WHERE CATEGORY = 'Joplin'
+</select>
+
+</mapper>
