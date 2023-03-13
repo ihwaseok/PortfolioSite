@@ -1,6 +1,6 @@
 <template>
-<li v-for="(item) in testData" v-bind:key="item.ID">
-    <a href="#" class="menu-item" v-bind:class="{active : (selectedId == item.ID)}" v-bind="{menuPath: item.PATH}">
+<li v-for="(item) in menuList" v-bind:key="item.ID">
+    <a href="#" class="menu-item" v-bind:class="{active : (selectedId == item.ID)}">
         {{ item.NAME }}
     </a>
 </li>
@@ -8,11 +8,21 @@
 
 
 <script setup lang="ts">
+import Axios, { type AxiosResponse, AxiosError } from 'axios';
 import { ref, type Ref } from 'vue';
 import type { MenuData } from '../custom/customType';
 
 let selectedId: Ref<string> = ref('');
-const testData: Partial<MenuData>[] = [{ID:'a', NAME:'a', PATH:'a'}];
+let menuList: Ref<Partial<MenuData>[]> = ref([]);
+
+// 메뉴 데이터 리스트 초기화
+Axios.get('/public/menu/r', {params: {id: 'all'}})
+    .then((res: AxiosResponse) => {
+        menuList.value = res.data;
+    })
+    .catch((error: AxiosError) => {
+        alert('에러 발생');
+    });
 </script>
 
 
