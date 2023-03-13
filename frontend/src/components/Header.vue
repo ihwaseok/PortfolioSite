@@ -42,6 +42,10 @@ import JoplinIcon from '../assets/icon/Joplin-icon.vue';
 import LoadingSpinner from './LoadingSpinner.vue';
 
 
+const emit = defineEmits<{
+	(e: 'getTopMenu', topMenu: string): void
+}>()
+
 type topMenuData = {
     id: string,
     name: string
@@ -53,6 +57,8 @@ let isSpinning: Ref<boolean> = ref(false);
 // 메뉴 선택 이벤트
 function menuSelect (menuId: string): void {
     selectedId.value = menuId;
+
+    emit('getTopMenu', menuId);
 }
 
 // Joplin Sync 클릭 이벤트
