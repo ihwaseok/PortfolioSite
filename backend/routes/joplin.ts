@@ -94,7 +94,7 @@ router.get('/sync/r', function(req: Request, res: Response, next: NextFunction) 
     searchRecursive(joplinDir, dataList, option);
 
     // 삽입전 테이블 데이터 삭제
-    const deleteQuery: string = 'TRUNCATE TABLE admin_menu';
+    const deleteQuery: string = 'DELETE FROM admin_menu WHERE CATEGORY = "Joplin"';
     connection.query(deleteQuery, function (err: Error) {
         if (err) {
             console.log('routes/joplin.ts : 테이블 삭제 쿼리 에러');

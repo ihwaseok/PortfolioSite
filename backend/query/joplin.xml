@@ -14,6 +14,7 @@
         ON A.ID = C.PARENT_ID
         AND C.IS_DIR = 'N'
     WHERE A.IS_DIR = 'Y'
+    AND A.CATEGORY = 'Joplin'
     GROUP BY A.ID, A.NAME, A.PARENT_ID, A.PATH, A.SORT_NO, A.IS_DIR
     ORDER BY A.ID
 </select>
