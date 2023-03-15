@@ -4,3 +4,7 @@
 
 # typescript 지원하지 않는 javascript 라이브러리 (js-library.d.ts)
  1. 
+
+ # frontend 빌드시 속도를 위하여 일시적으로 주석처리
+ 1. JoplinPage.vue : mermaid 관련 주석처리
+ 2. vite.config.ts : mermaid 관련 주석처리
