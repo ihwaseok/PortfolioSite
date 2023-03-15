@@ -17,7 +17,7 @@ export default defineConfig({
     emptyOutDir: true,
     rollupOptions: {
       external: [
-        
+        /mermaid/
       ]
     },
     chunkSizeWarningLimit: 5000

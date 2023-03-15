@@ -24,7 +24,7 @@ import CommonMenu from './components/CommonMenu.vue';
 
 
 let joplinPageRef: Ref<typeof JoplinPage> = ref(JoplinPage);
-let selectedMenu: Ref<string> = ref('1');
+let selectedMenu: Ref<string> = ref('2');
 
 // JoplinMenu로 부터 메뉴 Path 가져오기 (Emit-Receive)
 // 받아온 메뉴 Path로 JoplinPage의 메소드 호출

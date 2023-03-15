@@ -23,7 +23,7 @@
 import Axios, { AxiosError, type AxiosResponse } from 'axios';
 import { ref, type Ref } from 'vue';
 import MarkDownIt from 'markdown-it';
-import Mermaid from 'mermaid';
+//import Mermaid from 'mermaid';
 import Hljs from 'highlight.js';
 import type { ADMIN_MENU } from '@/custom/customType';
 import Table from './Table.vue';
@@ -84,8 +84,8 @@ function renderMermaid (html: string): string {
     if (mermaidList != null) {
         for (let item of mermaidList) {
             const beforeHtml: string = item.replace(/&gt;/gs, '>');
-            const svg: string = Mermaid.render('mermaid', beforeHtml);
-            html = html.replace(item, svg);
+            //const svg: string = Mermaid.render('mermaid', beforeHtml);
+            //html = html.replace(item, svg);
         }
     }
 
