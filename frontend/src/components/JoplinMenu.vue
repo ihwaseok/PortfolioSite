@@ -104,7 +104,7 @@ export default {
 					let childMenuList: MenuData[] = [];
 
 					for (let j: number = menuList.length-1; j >= i; j--) {	
-						if (childMenuId.includes(menuList[j].ID)) {
+						if (childMenuId.includes(menuList[j].MENU_ID)) {
 							childMenuList.push(menuList[j]);
 						}
 					}
@@ -134,8 +134,8 @@ export default {
 
 		// JoplinRecursiveList 에서 클릭한 메뉴의 Id를 받아오기 (Emit-Receive)
 		getMenuId (menuData: Partial<MenuData>): void {
-			const menuId: string = menuData.ID!;
-			const menuName: string = menuData.NAME!;
+			const menuId: string = menuData.MENU_ID!;
+			const menuName: string = menuData.MENU_NM!;
 
 			if (menuId != '' && menuId != null && menuId != undefined) {
 				this.getSubMenuList(menuId);

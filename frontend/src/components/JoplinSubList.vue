@@ -3,9 +3,9 @@
 	<a>{{ menuName }}</a>
 </span>
 
-<li v-for="(item) in props.menuList" v-bind:key="item.ID">
-    <a href="#" class="menu-item" v-bind:class="{active : (selectedId == item.ID)}" v-on:click="[subMenuSelect($event), passId(item.ID)]" v-bind="{menuPath: item.PATH}">
-		{{ item.NAME }}
+<li v-for="(item) in props.menuList" v-bind:key="item.MENU_ID">
+    <a href="#" class="menu-item" v-bind:class="{active : (selectedId == item.MENU_ID)}" v-on:click="[subMenuSelect($event), passId(item.MENU_ID)]" v-bind="{menuPath: item.PATH}">
+		{{ item.MENU_NM }}
 	</a>
 </li>
 </template>

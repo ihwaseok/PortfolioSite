@@ -1,7 +1,7 @@
 <template>
-<li v-for="(item) in menuList" v-bind:key="item.ID">
-    <a href="#" class="menu-item" v-bind:class="{active : (selectedId == item.ID)}">
-        {{ item.NAME }}
+<li v-for="(item) in menuList" v-bind:key="item.MENU_ID">
+    <a href="#" class="menu-item" v-bind:class="{active : (selectedId == item.MENU_ID)}" v-on:click="passId(item.MENU_ID!)">
+        {{ item.MENU_NM }}
     </a>
 </li>
 </template>
@@ -23,6 +23,13 @@ Axios.get('/public/menu/r', {params: {id: 'all'}})
     .catch((error: AxiosError) => {
         alert('에러 발생');
     });
+
+// 메뉴 클릭 이벤트
+// 메뉴 ID를 selectedId 에게 넘겨서 class 변경
+function passId(id: string): void {
+	selectedId.value = id;
+}
+
 </script>
 
 

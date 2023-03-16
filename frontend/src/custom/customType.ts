@@ -1,6 +1,6 @@
 export type MenuData = {
-    ID: string,
-    NAME: string,
+    MENU_ID: string,
+    MENU_NM: string,
     PARENT_ID: string,
     PATH: string,
     SORT_NO: number,
@@ -11,12 +11,12 @@ export type MenuData = {
 }
 
 export type ADMIN_MENU = {
-    ID: string,
-    NAME: string,
+    MENU_ID: string,
+    MENU_NM: string,
     PARENT_ID: string,
     CATEGORY: string,
     PATH: string,
     IS_DIR: string,
     SORT_NO: number,
-    CREATED_DT: string
+    CREATED_AT: string
 }

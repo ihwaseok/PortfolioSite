@@ -31,7 +31,7 @@ import '../assets/panda-syntax-light.min.css';
 
 
 const indexTableTitle: string = 'Joplin Menu 데이터';
-const indexHeader: string[] = ['ID', 'NAME', 'PARENT_ID', 'CATEGORY', 'PATH', 'IS_DIR', 'SORT_NO', 'CREATED_DT'];
+const indexHeader: string[] = ['MENU_ID', 'MENU_NM', 'PARENT_ID', 'CATEGORY', 'PATH', 'IS_DIR', 'SORT_NO', 'CREATED_AT'];
 let indexDataList: Ref<ADMIN_MENU[]> = ref([]);
 let isIndex: Ref<boolean> = ref(true);
 

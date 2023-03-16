@@ -6,6 +6,7 @@
     SELECT  ID, NAME, CATEGORY
     FROM    admin_menu
     WHERE   CATEGORY = "Public"
+    ORDER BY SORT_NO
 </select>
 
 </mapper>

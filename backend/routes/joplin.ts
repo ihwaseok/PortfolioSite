@@ -105,10 +105,10 @@ router.get('/sync/r', function(req: Request, res: Response, next: NextFunction) 
     });
     
     // 데이터 삽입
-    const insertQuery: string = 'INSERT INTO admin_menu (ID, NAME, PARENT_ID, CATEGORY, PATH, IS_DIR, SORT_NO, CREATED_DT) VALUES ?';
+    const insertQuery: string = 'INSERT INTO admin_menu (MENU_ID, MENU_NM, PARENT_ID, CATEGORY, PATH, IS_DIR, SORT_NO, CREATED_AT) VALUES ?';
     const values: (string | number)[][] = [];
     for (const data of dataList) {
-        const value: (string | number)[] = [data.ID, data.NAME, data.PARENT_ID, data.CATEGORY, data.PATH, data.IS_DIR, data.SORT_NO, data.CREATE_DT];
+        const value: (string | number)[] = [data.MENU_ID, data.MENU_NM, data.PARENT_ID, data.CATEGORY, data.PATH, data.IS_DIR, data.SORT_NO, data.CREATE_AT];
         values.push(value);
     }
 
@@ -133,29 +133,29 @@ function searchRecursive (dirPath: string, result: ADMIN_MENU[], option: recursi
         if (!option.exceptList.includes(child)) {
             const TIME_ZONE: number = 3240 * 10000;
             const now: string = new Date(+new Date() + TIME_ZONE).toISOString().replace('T', ' ').substring(0, 19);
-            let data: ADMIN_MENU = {ID:'', NAME:'', PARENT_ID:'', CATEGORY:'', PATH:'', IS_DIR:'', SORT_NO:0, CREATE_DT:''};
+            let data: ADMIN_MENU = {MENU_ID:'', MENU_NM:'', PARENT_ID:'', CATEGORY:'', PATH:'', IS_DIR:'', SORT_NO:0, CREATE_AT:''};
             sortNo++;
 
-            data.ID = option.parentId == '' ? sortNo.toString().padStart(3, '0') : option.parentId + '_' + sortNo.toString().padStart(3, '0');
+            data.MENU_ID = option.parentId == '' ? sortNo.toString().padStart(3, '0') : option.parentId + '_' + sortNo.toString().padStart(3, '0');
             data.PARENT_ID = option.parentId;
             data.CATEGORY = 'Joplin'
             data.PATH = dirPath + '/' + child;
             data.SORT_NO = sortNo;
-            data.CREATE_DT = now;
+            data.CREATE_AT = now;
             
             if (child.includes('.md')) {
                 data.IS_DIR = 'N';
-                data.NAME = child.replace('.md', '');
+                data.MENU_NM = child.replace('.md', '');
 
                 // 리소스 경로 수정
                 updateResoucePath(data.PATH);
             }
             else {
                 data.IS_DIR = 'Y';
-                data.NAME = child;
+                data.MENU_NM = child;
 
                 // 재귀에 들어가기 전에 현재 ID를 parent ID로
-                option.parentId = data.ID;
+                option.parentId = data.MENU_ID;
 
                 // 재귀함수
                 searchRecursive(data.PATH, result, option);

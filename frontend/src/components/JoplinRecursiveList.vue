@@ -1,9 +1,9 @@
 <template>
-<li v-for="(item) in props.menuList" v-bind:key="item.ID">
-    <a href="#" class="menu-item" v-on:click="getSubMenuList"  v-on:dblclick="openChildList" v-bind="{menuId: item.ID, menuName: item.NAME}">
+<li v-for="(item) in props.menuList" v-bind:key="item.MENU_ID">
+    <a href="#" class="menu-item" v-on:click="getSubMenuList"  v-on:dblclick="openChildList" v-bind="{menuId: item.MENU_ID, menuName: item.MENU_NM}">
 		
 		<ArrowIcon class="menu-arrow" v-if="item.CHILD_MENU != undefined" v-on:click="openChildList"/>
-		{{ item.NAME }} ({{ calculateNote(item, 0) }})
+		{{ item.MENU_NM }} ({{ calculateNote(item, 0) }})
 	</a>
 
 	<ul class="menu-item-sub list-unstyled" v-if="item.CHILD_MENU != undefined">
@@ -32,7 +32,7 @@ function getSubMenuList (evt: Event): void {
 	const el: Partial<HTMLElement> = evt!.target!;
 	const menuId: string = el.getAttribute!('menuId')!;
 	const menuName: string = el.getAttribute!('menuName')!;
-	const menuData: Partial<MenuData> = {ID: menuId, NAME: menuName};
+	const menuData: Partial<MenuData> = {MENU_ID: menuId, MENU_NM: menuName};
 
 	emit('getMenuId', menuData);
 
