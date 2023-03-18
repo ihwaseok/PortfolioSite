@@ -3,7 +3,7 @@
 <mapper namespace="publicMapper">
 
 <select id="getMenuAll">
-    SELECT  ID, NAME, CATEGORY
+    SELECT  MENU_ID, MENU_NM, CATEGORY
     FROM    admin_menu
     WHERE   CATEGORY = "Public"
     ORDER BY SORT_NO
