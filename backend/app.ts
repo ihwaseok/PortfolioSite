@@ -5,6 +5,7 @@ import Path from 'path';
 import CookieParser from 'cookie-parser';
 import Logger from 'morgan';
 import Mysql from 'mysql';
+import History from 'connect-history-api-fallback';
 
 // 페이지 라우터 등록
 import IndexRouter from './routes/index';
@@ -42,6 +43,7 @@ app.use(ExpressModule.json());
 app.use(ExpressModule.urlencoded({ extended: false }));
 app.use(CookieParser());
 app.use(ExpressModule.static(Path.join(__dirname, 'public')));
+app.use(History({ index: '/' }));
 
 // frontend의 REST API 연결
 app.use('/', IndexRouter);
