@@ -3,7 +3,7 @@ import Board from '@/components/BoardPage.vue';
 
 
 const routes: RouteRecordRaw[] = [
-  { path: '/', component: '' },
+  { path: '/', component: {} },
   { path: '/board', component: Board }
 ]
 
