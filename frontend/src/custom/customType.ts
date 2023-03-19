@@ -20,3 +20,13 @@ export type ADMIN_MENU = {
     SORT_NO: number,
     CREATED_AT: string
 }
+
+export type ADMIN_BOARD = {
+    CATEGORY: string,
+    BOARD_ID: number,
+    TITLE: string,
+    CONTENT: string,
+    CREATED_BY: string,
+    CREATED_AT: string,
+    DELETE_YN: string
+}

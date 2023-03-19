@@ -15,6 +15,7 @@ const connect_history_api_fallback_1 = __importDefault(require("connect-history-
 const index_1 = __importDefault(require("./routes/index"));
 const joplin_1 = __importDefault(require("./routes/joplin"));
 const public_1 = __importDefault(require("./routes/public"));
+const board_1 = __importDefault(require("./routes/board"));
 // express 애플리케이션 생성
 const app = (0, express_1.default)();
 // 뷰 엔진 설정
@@ -47,6 +48,7 @@ app.use((0, connect_history_api_fallback_1.default)({ index: '/' }));
 app.use('/', index_1.default);
 app.use('/joplin', joplin_1.default);
 app.use('/public', public_1.default);
+app.use('/board', board_1.default);
 // 리소스 경로 설정
 app.use('/joplinRes', express_1.default.static(path_1.default.join(__dirname, '../static/joplin')));
 // catch 404 and forward to error handler

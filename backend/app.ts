@@ -11,6 +11,7 @@ import History from 'connect-history-api-fallback';
 import IndexRouter from './routes/index';
 import JoplinRouter from './routes/joplin';
 import PublicRouter from './routes/public';
+import BoardRouter from './routes/board';
 
 // express 애플리케이션 생성
 const app: Express = ExpressModule();
@@ -49,6 +50,7 @@ app.use(History({ index: '/' }));
 app.use('/', IndexRouter);
 app.use('/joplin', JoplinRouter);
 app.use('/public', PublicRouter);
+app.use('/board', BoardRouter);
 
 // 리소스 경로 설정
 app.use('/joplinRes', ExpressModule.static(Path.join(__dirname, '../static/joplin')));

@@ -5,8 +5,10 @@
     <main role="main">
 
         <!-- page -->
-        <div class="content-box" v-text="indexTableTitle"></div>
-
+        <div class="content-box">
+            <Table v-bind:header="indexHeader" v-bind:headerMatcher="indexHeaderMatcher" v-bind:dataList="indexDataList" />
+        </div>
+        
     </main>
 
 </div>
@@ -16,23 +18,28 @@
 <script setup lang="ts">
 import Axios, { AxiosError, type AxiosResponse } from 'axios';
 import { ref, type Ref } from 'vue';
+import type { ADMIN_BOARD } from '@/custom/customType';
+import Table from './Table.vue';
 
 
-const indexTableTitle: string = `Joplin Menu 데이터aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-Joplin Menu 데이터aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-Joplin Menu 데이터aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-Joplin Menu 데이터aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-Joplin Menu 데이터aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-Joplin Menu 데이터aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-Joplin Menu 데이터aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-Joplin Menu 데이터aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-Joplin Menu 데이터aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-Joplin Menu 데이터aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-Joplin Menu 데이터aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-Joplin Menu 데이터aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-Joplin Menu 데이터aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-Joplin Menu 데이터aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-Joplin Menu 데이터aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`;
+const indexHeader: string[] = ['분류', 'BOARD_ID', 'TITLE', 'CONTENT', 'CREATED_BY', 'CREATED_AT', 'DELETE_YN'];
+const indexHeaderMatcher: string[] = ['CATEGORY', 'BOARD_ID', 'TITLE', 'CONTENT', 'CREATED_BY', 'CREATED_AT', 'DELETE_YN'];
+let indexDataList: Ref<ADMIN_BOARD[]> = ref([]);
+
+// 게시판 데이터 리스트 가져오기
+function getBoardList (path: string): void {
+    Axios.get('/board/boardList/r', {params: {pagePath: path}})
+        .then((res: AxiosResponse) => {                
+            const dataList: ADMIN_BOARD[] = res.data;
+            indexDataList.value = dataList;
+        })
+        .catch((error: AxiosError) => {
+            console.log(error);
+            alert('에러 발생');
+        });       
+}
+
+getBoardList('all');
 </script>
 
 
