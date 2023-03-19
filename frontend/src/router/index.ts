@@ -1,12 +1,10 @@
 import { createRouter, createWebHistory, type RouteRecordRaw, type Router } from 'vue-router';
-import Index from '@/components/Header.vue';
+import Board from '@/components/BoardPage.vue';
+
 
 const routes: RouteRecordRaw[] = [
-  {
-    path: '/',
-    name: 'index',
-    component: Index
-  }
+  { path: '/', component: '' },
+  { path: '/board', component: Board }
 ]
 
 const router: Router = createRouter({

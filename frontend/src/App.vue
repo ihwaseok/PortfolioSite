@@ -9,6 +9,7 @@
 
       <div class="d-flex" v-if="selectedMenu == '2'">
         <CommonMenu/>
+        <RouterView></RouterView>
       </div>
     </div>
   </div>

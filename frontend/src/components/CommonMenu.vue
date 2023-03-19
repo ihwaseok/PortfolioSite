@@ -33,7 +33,7 @@
 
 
 <script setup lang="ts">
-import CommonMenuList from './CommonMenuList.vue'
+import CommonMenuList from './CommonMenuList.vue';
 
 </script>
 
