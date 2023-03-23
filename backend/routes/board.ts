@@ -35,7 +35,7 @@ router.get('/boardList/r', function(req: Request, res: Response, next: NextFunct
     const path: string = req.query.pagePath!.toString();
     
     if (path == 'all') {
-        const query: string = MybatisMapper.getStatement('boardMapper', 'getBoardList', undefined, queryFormat);
+        const query: string = MybatisMapper.getStatement('boardMapper', 'selectBoardList', undefined, queryFormat);
         
         connection.query(query, function (err: Error, row: object[]) {
             if (err) {
@@ -46,6 +46,22 @@ router.get('/boardList/r', function(req: Request, res: Response, next: NextFunct
             res.send(row);
         });
     }
+});
+
+// 새 게시글 등록
+router.post('/boardList/c', function(req: Request, res: Response, next: NextFunction) {
+    const formData: MybatisMapper.Params = req.body.params;
+    const query: string = MybatisMapper.getStatement('boardMapper', 'insertBoardList', formData, queryFormat);
+    
+    connection.query(query, function (err: Error, row: object[]) {
+        if (err) {
+            console.log('routes/board.ts : 데이터 수정 쿼리 에러');
+            console.error(err);
+        }
+        
+        res.send(row);
+    });
+    
 });
 
 export default router;

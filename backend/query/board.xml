@@ -2,10 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="boardMapper">
 
-<select id="getBoardList">
+<select id="selectBoardList">
     SELECT *
     FROM admin_board
     ORDER BY BOARD_ID
 </select>
+
+<insert id="insertBoardList">
+    INSERT INTO admin_board (CATEGORY, TITLE, CONTENT, CREATED_AT, DELETE_YN) 
+    VALUES ('Board', #{title}, #{content}, DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s'), 'N')
+</insert>
 
 </mapper>

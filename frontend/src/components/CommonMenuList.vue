@@ -1,6 +1,6 @@
 <template>
 <li v-for="(item) in menuList" v-bind:key="item.MENU_ID">
-    <RouterLink v-bind:to="item.PATH!" class="menu-item" v-bind:class="{active : (selectedId == item.MENU_ID)}" v-on:click="passId(item.MENU_ID!)" >
+    <RouterLink v-bind:to="'/' + item.PATH!" class="menu-item" v-bind:class="{active : (selectedId == item.MENU_ID)}" v-on:click="passId(item.MENU_ID!)" >
         {{ item.MENU_NM }}
     </RouterLink>
 </li>

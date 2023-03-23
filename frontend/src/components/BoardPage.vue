@@ -6,6 +6,10 @@
 
         <!-- page -->
         <div class="content-box">
+            <div>
+                <RouterLink role="button" id="btnWrite" to="/board/write" class="btn btn-primary" style="margin-bottom: 1rem;">글쓰기</RouterLink>
+            </div>
+            
             <Table v-bind:header="indexHeader" v-bind:headerMatcher="indexHeaderMatcher" v-bind:dataList="indexDataList" />
         </div>
         
@@ -22,7 +26,7 @@ import type { ADMIN_BOARD } from '@/custom/customType';
 import Table from './Table.vue';
 
 
-const indexHeader: string[] = ['분류', 'BOARD_ID', 'TITLE', 'CONTENT', 'CREATED_BY', 'CREATED_AT', 'DELETE_YN'];
+const indexHeader: string[] = ['분류', 'BOARD_ID', '제목', '내용', 'CREATED_BY', 'CREATED_AT', 'DELETE_YN'];
 const indexHeaderMatcher: string[] = ['CATEGORY', 'BOARD_ID', 'TITLE', 'CONTENT', 'CREATED_BY', 'CREATED_AT', 'DELETE_YN'];
 let indexDataList: Ref<ADMIN_BOARD[]> = ref([]);
 
