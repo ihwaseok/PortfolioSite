@@ -10,7 +10,7 @@
         <!-- index 그리드 -->
         <div class="content-box" v-if="isIndex">
             <h1>{{ indexTableTitle }}</h1>
-            <Table v-bind:header="indexHeader" v-bind:headerMatcher="indexHeader" v-bind:dataList="indexDataList" />
+            <Table v-bind:header="indexHeader" v-bind:headerMatcher="indexHeader" v-bind:dataList="indexDataList" v-bind:rowFunction="rowFunction"/>
         </div>
 
     </main>
@@ -103,6 +103,11 @@ function getGridData (): void {
             alert('에러 발생');
         });
         
+}
+
+// 테이블 행 함수
+const rowFunction: Function = function() {
+
 }
 
 // Init

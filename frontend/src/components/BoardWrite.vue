@@ -21,8 +21,8 @@ import Router from '@/router';
 let title = '';
 let content = '';
 
-function save() {
-    let formData = {title: "", content: ""};
+function save(): void {
+    let formData = {title: '', content: ''};
     formData.title = title;
     formData.content = content;
 

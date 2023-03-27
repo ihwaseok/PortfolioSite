@@ -5,7 +5,7 @@
     </thead>
 
     <tbody>
-        <tr v-for="(line) in tableData">
+        <tr v-for="(line) in tableData" v-on:click="props.rowFunction(line[1])">
             <td v-for="(data) in line">{{ data }}</td>
         </tr>
     </tbody>
@@ -20,6 +20,7 @@ const props = defineProps<{
     header: string[];
     headerMatcher: string[];
     dataList: object[];
+    rowFunction: Function;
 }>()
 
 let tableData: Ref<(string | number | null | undefined)[][]> = ref([]);

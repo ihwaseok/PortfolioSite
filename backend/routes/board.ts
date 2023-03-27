@@ -64,4 +64,36 @@ router.post('/boardList/c', function(req: Request, res: Response, next: NextFunc
     
 });
 
+// 상세 페이지 데이터 가져오기
+router.get('/detail/r', function(req: Request, res: Response, next: NextFunction) {
+    const formData: MybatisMapper.Params = { id : req.query.id!.toString() };   
+    const query: string = MybatisMapper.getStatement('boardMapper', 'selectBoardDetail', formData, queryFormat);
+    
+    connection.query(query, function (err: Error, row: object[]) {
+        if (err) {
+            console.log('routes/board.ts : 상세 데이터 조회 쿼리 에러');
+            console.error(err);
+        }
+        
+        res.send(row);
+    });
+    
+});
+
+// 상세 페이지 데이터 수정
+router.post('/detail/u', function(req: Request, res: Response, next: NextFunction) {
+    const formData: MybatisMapper.Params = req.body.params;
+    const query: string = MybatisMapper.getStatement('boardMapper', 'updateBoard', formData, queryFormat);
+    
+    connection.query(query, function (err: Error, row: object[]) {
+        if (err) {
+            console.log('routes/board.ts : 데이터 수정 쿼리 에러');
+            console.error(err);
+        }
+        
+        res.send(row);
+    });
+    
+});
+
 export default router;

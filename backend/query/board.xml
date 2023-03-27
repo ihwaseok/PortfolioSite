@@ -8,9 +8,22 @@
     ORDER BY BOARD_ID
 </select>
 
+<select id="selectBoardDetail">
+    SELECT *
+    FROM admin_board
+    WHERE BOARD_ID = #{id}
+</select>
+
 <insert id="insertBoardList">
     INSERT INTO admin_board (CATEGORY, TITLE, CONTENT, CREATED_AT, DELETE_YN) 
     VALUES ('Board', #{title}, #{content}, DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s'), 'N')
 </insert>
+
+<update id="updateBoard">
+    UPDATE admin_board 
+    SET TITLE = #{title}
+        , CONTENT = #{content}
+    WHERE BOARD_ID = #{id}
+</update>
 
 </mapper>
