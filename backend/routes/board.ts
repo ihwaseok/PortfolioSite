@@ -96,4 +96,20 @@ router.post('/detail/u', function(req: Request, res: Response, next: NextFunctio
     
 });
 
+// 상세 페이지 데이터 삭제
+router.post('/detail/d', function(req: Request, res: Response, next: NextFunction) {
+    const formData: MybatisMapper.Params = req.body.params;
+    const query: string = MybatisMapper.getStatement('boardMapper', 'deleteBoard', formData, queryFormat);
+    
+    connection.query(query, function (err: Error, row: object[]) {
+        if (err) {
+            console.log('routes/board.ts : 데이터 수정 쿼리 에러');
+            console.error(err);
+        }
+        
+        res.send(row);
+    });
+    
+});
+
 export default router;

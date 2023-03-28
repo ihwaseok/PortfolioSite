@@ -26,4 +26,10 @@
     WHERE BOARD_ID = #{id}
 </update>
 
+<update id="deleteBoard">
+    UPDATE admin_board 
+    SET DELETE_YN = 'Y'
+    WHERE BOARD_ID = #{id}
+</update>
+
 </mapper>

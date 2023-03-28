@@ -9,6 +9,7 @@
         <textarea id="content" class="form-control" rows="3" v-model="content"></textarea>
     </div>
     <button type="button" class="btn btn-primary" v-on:click="update()">수정</button>
+    <button type="button" class="btn btn-primary" style="margin-left: 0.8rem;" v-on:click="deleteBoard()">삭제</button>
     <button type="button" class="btn btn-secondary" style="margin-left: 0.8rem;" v-on:click="cancel()">취소</button>
 </div>
 </template>
@@ -47,6 +48,20 @@ function update(): void {
     Axios.post('/board/detail/u', {params: formData})
         .then((res: AxiosResponse) => {
             alert("수정 성공");
+            Router.push("/board");
+        })
+        .catch((error: AxiosError) => {
+            alert('에러 발생');
+        });
+}
+
+function deleteBoard(): void {
+    let formData = {id: ''};
+    formData.id = router.params.id.toString();
+
+    Axios.post('/board/detail/d', {params: formData})
+        .then((res: AxiosResponse) => {
+            alert("삭제 성공");
             Router.push("/board");
         })
         .catch((error: AxiosError) => {
