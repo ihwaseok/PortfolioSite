@@ -32,8 +32,8 @@ const indexHeaderMatcher: string[] = ['CATEGORY', 'BOARD_ID', 'TITLE', 'CONTENT'
 let indexDataList: Ref<ADMIN_BOARD[]> = ref([]);
 
 // 상세 페이지 이동
-const goDetailPage: Function = function(boardId: string) {
-    Router.push({ path : `/board/detail/${boardId}` });
+const goDetailPage: Function = function(line: string[]) {
+    Router.push({ path : `/board/detail/${line[1]}` });
 };
 
 // 게시판 데이터 리스트 가져오기

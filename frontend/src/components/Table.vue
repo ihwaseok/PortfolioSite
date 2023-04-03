@@ -5,7 +5,7 @@
     </thead>
 
     <tbody>
-        <tr v-for="(line) in tableData" v-on:click="props.rowFunction(line[1])">
+        <tr v-for="(line) in tableData" v-on:click="props.rowFunction(line)">
             <td v-for="(data) in line">{{ data }}</td>
         </tr>
     </tbody>

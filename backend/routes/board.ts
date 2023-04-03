@@ -112,4 +112,52 @@ router.post('/detail/d', function(req: Request, res: Response, next: NextFunctio
     
 });
 
+// 상세 페이지 댓글 데이터 가져오기
+router.get('/detail/comment/r', function(req: Request, res: Response, next: NextFunction) {
+    const formData: MybatisMapper.Params = { id : req.query.id!.toString() };   
+    const query: string = MybatisMapper.getStatement('boardMapper', 'selectBoardDetailComment', formData, queryFormat);
+    
+    connection.query(query, function (err: Error, row: object[]) {
+        if (err) {
+            console.log('routes/board.ts : 상세 데이터 조회 쿼리 에러');
+            console.error(err);
+        }
+        
+        res.send(row);
+    });
+    
+});
+
+// 새 댓글 등록
+router.post('/detail/comment/c', function(req: Request, res: Response, next: NextFunction) {
+    const formData: MybatisMapper.Params = req.body.params;
+    const query: string = MybatisMapper.getStatement('boardMapper', 'insertBoardDetailComment', formData, queryFormat);
+    
+    connection.query(query, function (err: Error, row: object[]) {
+        if (err) {
+            console.log('routes/board.ts : 데이터 수정 쿼리 에러');
+            console.error(err);
+        }
+        
+        res.send(row);
+    });
+    
+});
+
+// 상세 페이지 데이터 삭제
+router.post('/detail/comment/d', function(req: Request, res: Response, next: NextFunction) {
+    const formData: MybatisMapper.Params = req.body.params;
+    const query: string = MybatisMapper.getStatement('boardMapper', 'deleteBoardDetailComment', formData, queryFormat);
+    
+    connection.query(query, function (err: Error, row: object[]) {
+        if (err) {
+            console.log('routes/board.ts : 데이터 수정 쿼리 에러');
+            console.error(err);
+        }
+        
+        res.send(row);
+    });
+    
+});
+
 export default router;

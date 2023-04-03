@@ -14,9 +14,20 @@
     WHERE BOARD_ID = #{id}
 </select>
 
+<select id="selectBoardDetailComment">
+    SELECT *
+    FROM admin_comment
+    WHERE BOARD_ID = #{id}
+</select>
+
 <insert id="insertBoardList">
     INSERT INTO admin_board (CATEGORY, TITLE, CONTENT, CREATED_AT, DELETE_YN) 
     VALUES ('Board', #{title}, #{content}, DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s'), 'N')
+</insert>
+
+<insert id="insertBoardDetailComment">
+    INSERT INTO admin_comment (CATEGORY, BOARD_ID, CONTENT, CREATED_AT, DELETE_YN) 
+    VALUES ('Board', #{id}, #{content}, DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s'), 'N')
 </insert>
 
 <update id="updateBoard">
@@ -30,6 +41,12 @@
     UPDATE admin_board 
     SET DELETE_YN = 'Y'
     WHERE BOARD_ID = #{id}
+</update>
+
+<update id="deleteBoardDetailComment">
+    UPDATE admin_comment
+    SET DELETE_YN = 'Y'
+    WHERE COMMENT_ID = #{id}
 </update>
 
 </mapper>

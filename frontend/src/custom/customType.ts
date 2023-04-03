@@ -30,3 +30,13 @@ export type ADMIN_BOARD = {
     CREATED_AT: string,
     DELETE_YN: string
 }
+
+export type ADMIN_COMMENT = {
+    COMMENT_ID: string,
+    CATEGORY: string,
+    BOARD_ID: number,
+    CONTENT: string,
+    CREATED_BY: string,
+    CREATED_AT: string,
+    DELETE_YN: string
+}
