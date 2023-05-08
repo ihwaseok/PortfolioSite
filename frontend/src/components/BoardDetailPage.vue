@@ -29,6 +29,7 @@ import Router from '@/router';
 import { useRoute } from 'vue-router';
 import Table from './Table.vue'
 import type { ADMIN_COMMENT } from '@/custom/customType';
+import Editor from '@/components/Editor.vue';
 
 const router = useRoute();
 let title: Ref<string> = ref('');
