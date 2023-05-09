@@ -8,6 +8,14 @@
     ORDER BY BOARD_ID
 </select>
 
+<select id="searchBoardList">
+    SELECT *
+    FROM admin_board
+    WHERE 1=1
+    AND TITLE LIKE CONCAT('%', #{searchText}, '%')
+    ORDER BY BOARD_ID
+</select>
+
 <select id="selectBoardDetail">
     SELECT *
     FROM admin_board
