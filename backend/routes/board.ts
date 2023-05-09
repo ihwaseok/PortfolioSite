@@ -48,6 +48,24 @@ router.get('/boardList/r', function(req: Request, res: Response, next: NextFunct
     }
 });
 
+// 검색된 메뉴 데이터 가져오기 
+router.get('/boardList/search', function(req: Request, res: Response, next: NextFunction) {
+    
+    const formData: MybatisMapper.Params = { searchText : req.query.searchText!.toString() };
+    
+    const query: string = MybatisMapper.getStatement('boardMapper', 'searchBoardList', formData, queryFormat);
+    
+    connection.query(query, function (err: Error, row: object[]) {
+        if (err) {
+            console.log('routes/board.ts : 전체 데이터 쿼리 에러');
+            console.error(err);
+        }
+        
+        res.send(row);
+    });
+    
+});
+
 // 새 게시글 등록
 router.post('/boardList/c', function(req: Request, res: Response, next: NextFunction) {
     const formData: MybatisMapper.Params = req.body.params;
