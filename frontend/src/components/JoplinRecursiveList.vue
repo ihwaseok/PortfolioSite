@@ -1,22 +1,23 @@
 <template>
-<li v-for="(item) in props.menuList" v-bind:key="item.MENU_ID">
-    <a href="#" class="menu-item" v-on:click="getSubMenuList"  v-on:dblclick="openChildList" v-bind="{menuId: item.MENU_ID, menuName: item.MENU_NM}">
-		
-		<ArrowIcon class="menu-arrow" v-if="item.CHILD_MENU != undefined" v-on:click="openChildList"/>
-		{{ item.MENU_NM }} ({{ calculateNote(item, 0) }})
-	</a>
+	<v-list class="menu-list" density="compact" nav v-for="(item) in props.menuList" v-bind:key="item.MENU_ID">
+		<v-list-item class="menu-item" link :active="(selectedId == item.MENU_ID && 'N' == item.IS_DIR)" v-on:click="getSubMenuList(item.MENU_ID, item.MENU_NM)">
+				{{ item.MENU_NM }} ({{ calculateNote(item, 0) }})
+				<ArrowIcon v-bind:id="item.MENU_ID + '_arrow'" class="menu-arrow" v-if="item.IS_DIR == 'Y'"/>
+		</v-list-item>
 
-	<ul class="menu-item-sub list-unstyled" v-if="item.CHILD_MENU != undefined">
-		<JoplinRecursiveList v-bind:menuList="item.CHILD_MENU" v-bind:onGetMenuId="getMenuId"/>
-	</ul>
-</li>
+		<ul v-bind:id="item.MENU_ID + '_child'" class="menu-item-sub list-unstyled" v-if="item.CHILD_MENU != undefined">
+			<JoplinRecursiveList v-bind:menuList="item.CHILD_MENU" v-bind:onGetMenuId="getMenuId"/>
+		</ul>
+	</v-list>
 </template>
 
 
 <script setup lang="ts">
+import { ref, type Ref } from 'vue';
 import type { MenuData } from '../custom/customType';
 import ArrowIcon from '../assets/icon/angle-right-solid.vue';
 
+let selectedId: Ref<string> = ref('');
 
 const props = defineProps<{
     menuList: MenuData[];
@@ -28,40 +29,31 @@ const emit = defineEmits<{
 
 // 서브 메뉴 리스트 출력
 // 메뉴를 선택했을 경우 메뉴 Id를 JoplinMenu 에게 전달 (Emit)
-function getSubMenuList (evt: Event): void {
-	const el: Partial<HTMLElement> = evt!.target!;
-	const menuId: string = el.getAttribute!('menuId')!;
-	const menuName: string = el.getAttribute!('menuName')!;
+function getSubMenuList (menuId: string, menuName: string): void {
 	const menuData: Partial<MenuData> = {MENU_ID: menuId, MENU_NM: menuName};
 
-	emit('getMenuId', menuData);
+	selectedId.value = menuId;
 
-	evt.preventDefault(); // 상단이동 방지
+	emit('getMenuId', menuData);
+	openChildList(menuId);
 }
 
 // 하위 트리 활성화
 // 화살표를 선택했을 경우 하위 리스트를 출력하고 화살표 애니메이션을 작동하기 위해 class를 조작
-function openChildList (evt: Event): void {
-    let el: Partial<HTMLElement> = evt!.target!;
+function openChildList (menuId: string): void {
+	const arrow: Partial<HTMLElement> = document.getElementById(menuId + '_arrow')!;
+	const child: Partial<HTMLElement> = document.getElementById(menuId + '_child')!;
 	
-	if (el.getAttribute!('menuId') == null) {
-		el = el.parentElement!;
-	}
-
-    if (el.nextElementSibling != null) {
-        const ul: Element = el.nextElementSibling;
-
-        if (ul.classList.contains('menu-activated')) {
-            ul.classList.remove('menu-activated');
-			el.firstElementChild!.classList.remove('rotated');
+    if (child != null) {
+        if (child.classList!.contains('menu-activated')) {
+            child.classList!.remove('menu-activated');
+			arrow.classList!.remove('rotated');
         }
         else {
-            ul.classList.add('menu-activated');
-			el.firstElementChild!.classList.add('rotated');
+            child.classList!.add('menu-activated');
+			arrow.classList!.add('rotated');
         }
     }
-
-	evt.preventDefault();
 }
 
 // 재귀 호출시 메뉴 Id 가져오기 (Emit-Receive)
@@ -86,18 +78,16 @@ function calculateNote (item: MenuData, count: number): number {
 
 
 <style scoped>
+.menu-list {
+	padding-top: 0;
+	padding-bottom: 0;
+	padding-right:0;
+}
 .menu-item {
-	display: block;
-	color:black;
-	padding: 0 0.625rem 0 0.4rem;
-	margin: 0;
-	margin-bottom: 0.2rem;
-	font-weight: 500;
-	text-decoration: none;
-	line-height: 1.875rem;
+	padding: 0 0 0 0;
 }
 .menu-item:hover {
-	color:blue;
+	color:gold;
 }
 
 .menu-item-sub {
@@ -113,6 +103,7 @@ function calculateNote (item: MenuData, count: number): number {
 	font-weight: 900;
 	margin-top: 0.6rem;
 	margin-right: 0.3rem;
+	fill:whitesmoke;
 	float: right;
 }
 .rotated {

@@ -1,6 +1,8 @@
 <template>
     <div class="loading-spinner" v-if="props.isSpinning">
-        <div class="spinner-border text-primary spinner" role="status"></div>
+        <div class="spinner-border text-primary spinner" role="status">
+            <v-progress-circular color="primary" indeterminate :size="61" :width="5"></v-progress-circular>
+        </div>
     </div>
 </template>
 
@@ -20,7 +22,6 @@ const props = defineProps<{
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0,0,0,0.5); 
     z-index: 2; 
 }
 .spinner {
@@ -28,5 +29,7 @@ const props = defineProps<{
     height: 200px;
     margin-top:20%; 
     margin-left:45%;
+    display:flex;
+    justify-content: center;
 }
 </style>

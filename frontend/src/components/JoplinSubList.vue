@@ -1,13 +1,13 @@
 <template>
-<span class="menu-title">
-	<a>{{ menuName }}</a>
-</span>
+	<div class="text-center">
+		<v-btn color="primary" class="ma-2" rounded disabled>{{ menuName }}</v-btn>
+	</div>
 
-<li v-for="(item) in props.menuList" v-bind:key="item.MENU_ID">
-    <a href="#" class="menu-item" v-bind:class="{active : (selectedId == item.MENU_ID)}" v-on:click="[subMenuSelect($event), passId(item.MENU_ID)]" v-bind="{menuPath: item.PATH}">
-		{{ item.MENU_NM }}
-	</a>
-</li>
+	<v-list density="compact" nav v-for="(item) in props.menuList" v-bind:key="item.MENU_ID">
+		<v-list-item :active="(selectedId == item.MENU_ID)" v-on:click="[subMenuSelect(item.PATH), passId(item.MENU_ID)]">
+			{{ item.MENU_NM }}
+		</v-list-item>
+	</v-list>
 </template>
 
 
@@ -29,10 +29,7 @@ const emit = defineEmits<{
 
 // 메뉴 클릭 이벤트
 // 메뉴 Path를 JoplinMenu 에게 전달 (Emit)
-function subMenuSelect (evt: Event): void {
-    const el: Partial<HTMLElement> = evt!.target!;
-	let menuPath: string = el.getAttribute!('menuPath')!;
-
+function subMenuSelect(menuPath: string): void {
 	emit('getMenuPath', menuPath);
 }
 
@@ -43,33 +40,3 @@ function passId(id: string): void {
 }
 
 </script>
-
-
-<style scoped>
-.menu-title {
-	display: block;
-	font-size: 18px;
-	text-align: center;
-	padding-bottom: 0.2rem;
-	border-bottom: 2px solid black;
-	background-color: #40BFFF;
-	min-height: 2rem;
-}
-.menu-item {
-	display: block;
-	color:black;
-	padding: 0 0.625rem 0 0.8rem;
-	margin: 0;
-	font-weight: 500;
-	text-decoration: none;
-	line-height: 1.875rem;
-	border-bottom: 1px solid black;
-}
-.menu-item:hover {
-	color: blue;
-}
-
-.active {
-	background-color: #ACCEE5;
-}
-</style>
