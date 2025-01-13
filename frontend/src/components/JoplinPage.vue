@@ -2,7 +2,7 @@
 <div class="container-fluid">
 
     <!-- content -->
-    <main role="main">
+    <!-- <main role="main"> -->
 
         <!-- page -->
         <div class="content-box" v-html="htmlText"></div>
@@ -13,7 +13,7 @@
             <Table v-bind:header="indexHeader" v-bind:headerMatcher="indexHeader" v-bind:dataList="indexDataList" v-bind:rowFunction="rowFunction"/>
         </div>
 
-    </main>
+    <!-- </main> -->
 
 </div>
 </template>
@@ -57,6 +57,7 @@ function getHtmlText (path: string): void {
     if (path != null && path != undefined) {
         Axios.get('/joplin/page/r', {params: {pagePath: path}})
             .then((res: AxiosResponse) => {
+                console.log(res);
                 let html: string = md.render(res.data);
                 htmlText.value = renderMermaid(html);
                 getGridData();
@@ -127,6 +128,15 @@ defineExpose({ getHtmlText });
 .content-box {
   padding: 1.25rem;
   border-radius: 0.25rem;
+}
+.content-box ul {
+    padding-left: 1.25rem;
+}
+.context-box li {
+    padding-left: 1.25rem;
+}
+ol {
+    padding-left: 1.25rem;
 }
 table {
     border: solid 1px #DDEEEE;
