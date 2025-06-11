@@ -3,7 +3,8 @@
 <mapper namespace="joplinMapper">
 
 <select id="getMenuAll">
-    SELECT A.MENU_ID, A.MENU_NM, A.PARENT_ID, A.PATH, A.SORT_NO, A.IS_DIR
+    SELECT A.MENU_ID, A.MENU_NM, A.PARENT_ID, A.PATH, A.SORT_NO
+            , IF(COUNT(B.MENU_ID) = 0, 'N', 'Y') AS IS_DIR
             , GROUP_CONCAT(B.MENU_ID ORDER BY B.SORT_NO) AS CHILD_MENU_ID
             , COUNT(DISTINCT C.MENU_ID) AS SUB_CNT
     FROM admin_menu A
