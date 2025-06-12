@@ -31,7 +31,7 @@ CREATE TABLE `admin_board` (
   `CREATED_AT` datetime DEFAULT NULL,
   `DELETE_YN` varchar(1) NOT NULL DEFAULT 'N',
   PRIMARY KEY (`BOARD_ID`,`CATEGORY`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -63,7 +63,7 @@ CREATE TABLE `admin_comment` (
   KEY `admin_comment_admin_board_FK` (`CATEGORY`,`BOARD_ID`),
   KEY `admin_comment_admin_board_FK2` (`BOARD_ID`,`CATEGORY`),
   CONSTRAINT `admin_comment_admin_board_FK2` FOREIGN KEY (`BOARD_ID`, `CATEGORY`) REFERENCES `admin_board` (`BOARD_ID`, `CATEGORY`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -98,7 +98,7 @@ CREATE TABLE `admin_file` (
   KEY `admin_file_admin_board_FK` (`CATEGORY`,`BOARD_ID`),
   KEY `admin_file_admin_board_FK2` (`BOARD_ID`,`CATEGORY`),
   CONSTRAINT `admin_file_admin_board_FK2` FOREIGN KEY (`BOARD_ID`, `CATEGORY`) REFERENCES `admin_board` (`BOARD_ID`, `CATEGORY`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -128,7 +128,7 @@ CREATE TABLE `admin_menu` (
   `CREATED_BY` varchar(20) DEFAULT NULL,
   `CREATED_AT` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`MENU_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
