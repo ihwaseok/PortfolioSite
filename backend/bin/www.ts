@@ -11,7 +11,7 @@ import { AddressInfo } from 'net';
 const debug: Debug.Debugger = Debug('portpoliosite:server');
 
 // 포트 설정
-const port: number | string | boolean = normalizePort(process.env.PORT || '3000');
+const port: number | string | boolean = normalizePort(process.env.PORT || '8080');
 App.set('port', port);
 
 // HTTP 서버 생성
