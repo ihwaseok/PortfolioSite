@@ -2,7 +2,9 @@
   <v-layout>
 
     <!-- 상단 메뉴바 -->
-    <v-app-bar color="#211F22" height="50" title="LSH Portpolio Site">
+    <v-app-bar color="#211F22" height="50">
+      <v-app-bar-title @click="goIndex">LSH Portfolio Site</v-app-bar-title>
+
       <!-- 바로가기 버튼 -->
       <div class="flex flex-row">
         <v-btn href="https://mylsh-redmine.duckdns.org">
@@ -84,5 +86,9 @@ function syncJoplin(event: Event): void {
             isSpinning.value = false;
             alert('에러 발생');
         });
+}
+// 초기화면으로 이동
+function goIndex() {
+  location.reload();
 }
 </script>
