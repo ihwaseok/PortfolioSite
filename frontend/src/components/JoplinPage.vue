@@ -1,5 +1,5 @@
 <template>
-<div class="container-fluid">
+<div class="container-fluid" style="height:calc(100lvh - 50px); overflow: auto;">
 
     <!-- content -->
     <!-- <main role="main"> -->

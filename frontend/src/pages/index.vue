@@ -3,10 +3,22 @@
 
     <!-- 상단 메뉴바 -->
     <v-app-bar color="#211F22" height="50" title="LSH Portpolio Site">
-      <!-- 깃허브 바로가기 버튼 -->
-      <v-btn icon href="https://github.com/ihwaseok/PortpolioSite">
-        <v-icon>mdi-github</v-icon>
-      </v-btn>
+      <!-- 바로가기 버튼 -->
+      <div class="flex flex-row">
+        <v-btn href="https://mylsh-redmine.duckdns.org">
+          <v-icon style="font-size:24px;padding-right:5px;">mdi-alpha-r-box</v-icon>
+          <span>일감관리 사이트</span>
+        </v-btn>
+
+        <v-btn href="https://mylsh-zabbix.duckdns.org">
+          <v-icon style="font-size:24px;padding-right:5px;">mdi-monitor-eye</v-icon>
+          <span>모니터링 사이트</span>
+        </v-btn>
+
+        <v-btn href="https://github.com/ihwaseok">
+          <v-icon style="font-size:24px;">mdi-github</v-icon>
+        </v-btn>
+      </div>
 
       <!-- 기타 버튼 -->
       <v-btn icon>
