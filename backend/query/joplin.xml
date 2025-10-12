@@ -25,7 +25,7 @@
     FROM admin_menu A
     WHERE A.PARENT_ID = #{id}
     AND A.IS_DIR = 'N'
-    ORDER BY A.MENU_ID
+    ORDER BY A.SORT_NO
 </select>
 
 <select id="getMenuGrid">
